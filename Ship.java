@@ -14,6 +14,7 @@ public class Ship {
     }
 
     public String getType(){
+
         return this.type;
     }
 }
