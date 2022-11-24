@@ -15,6 +15,7 @@ public class Ship {
     public Ship(String type, int size) {
         this.type = type;
         this.size = size;
+        this.hp = this.size;
         this.setBody();
     }
 

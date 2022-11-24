@@ -8,6 +8,7 @@ public class Carrier extends Ship{
 
     public Carrier(String type, int size) {
         super(type, size);
+        this.hp = this.size * 2;
         this.setBody();
     }
 
