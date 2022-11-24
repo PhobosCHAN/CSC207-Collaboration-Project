@@ -1,3 +1,4 @@
+package ship;
 
 public class Ship {
     String type;
