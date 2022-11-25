@@ -19,12 +19,21 @@ import static javafx.collections.FXCollections.observableArrayList;
  *
  * Based on the Tetris assignment in the Nifty Assignments Database, authored by Nick Parlante
  */
-public class LoadView {
+public class viewLoad {
 
     private viewGame game;
     private Label chosenBoardLabel;
     private Button chosenBoardButton;
     private ListView<String> gamesList;
+
+    static String saveFileSuccess = "Saved board!!";
+    static String saveFileExistsError = "Error: File already exists";
+    static String saveFileNotSerError = "Error: File must end with .ser";
+    private Label saveFileErrorLabel = new Label("");
+    private Label saveBoardLabel = new Label(String.format("Enter name of file to save"));
+    private TextField saveFileNameTextField = new TextField("");
+    private Button saveBoardButton = new Button("Save board");
+    BattleModel model;
 
 
     /**
@@ -32,7 +41,7 @@ public class LoadView {
      *
      * @param game master view
      */
-    public LoadView (viewGame game) {
+    public viewLoad(viewGame game) {
         game.paused = true;
         this.game = game;
         chosenBoardLabel = new Label(String.format("Currently playing: Default Board"));
@@ -55,6 +64,22 @@ public class LoadView {
         chosenBoardButton = new Button("Change board");
         chosenBoardButton.setId("ChangeBoard"); // DO NOT MODIFY ID
 
+        saveBoardButton = new Button("Save board");
+        saveBoardButton.setId("SaveBoard"); // DO NOT MODIFY ID
+        saveBoardButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+        saveBoardButton.setPrefSize(200, 50);
+        saveBoardButton.setFont(new Font(16));
+        saveBoardButton.setOnAction(e -> saveBoard());
+
+        VBox saveBoardBox = new VBox(10, saveBoardLabel, saveFileNameTextField, saveBoardButton, saveFileErrorLabel);
+
+        dialogVbox.getChildren().add(saveBoardBox);
+        Scene dialogScene = new Scene(dialogVbox, 400, 400);
+        dialog.setScene(dialogScene);
+        dialog.show();
+        dialog.setOnCloseRequest(event -> {
+            game.paused = false;
+        });
         //on selection, do something
         chosenBoardButton.setOnAction(e -> {
             try {
@@ -149,6 +174,29 @@ public class LoadView {
         } finally {
             in.close();
             file.close();
+        }
+    }
+
+    /**
+     * Save the board to a file
+     */
+    public void saveBoard() {
+        this.model = BattleModel.model;
+        File directory = new File("Stack_Overload_Certified-CSC207/boards/");
+        try {
+            if (!saveFileNameTextField.getText(saveFileNameTextField.getLength() - 4, saveFileNameTextField.getLength()).equals(".ser")){
+                throw new Exception(saveFileNotSerError);
+            }
+            File filename = new File(directory.getAbsolutePath(), saveFileNameTextField.getText());
+            if (filename.exists()) {
+                throw new Exception(saveFileExistsError);
+            } else {
+                model.saveModel(filename);
+                filename.createNewFile();
+                System.out.println(saveFileSuccess);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -232,24 +232,6 @@ public class viewGame {
     }
 
     /**
-     * Get user selection of "autopilot" or human player
-     *
-     * @param value toggle selector on UI
-     */
-    private void swapPilot(Toggle value) {
-        RadioButton chk = (RadioButton)value.getToggleGroup().getSelectedToggle();
-        String strVal = chk.getText();
-        if (strVal.equals("Computer (Default)")){
-            this.model.setAutoPilotMode();
-            gameModeLabel.setText("Player is: Computer (Default)");
-        } else if (strVal.equals("Human")) {
-            this.model.setHumanPilotMode();
-            gameModeLabel.setText("Player is: Human");
-        }
-        borderPane.requestFocus(); //give the focus back to the pane with the blocks.
-    }
-
-    /**
      * Update board (paint pieces and score info)
      */
     private void updateBoard() {
@@ -321,18 +303,9 @@ public class viewGame {
     }
 
     /**
-     * Create the view to save a board to a file
+     * Create the view to save or load a board to a file
      */
-    private void createSaveView(){
-        SaveView saveView = new SaveView(this);
+    private void createMemoryView(){
+        viewLoad loadView = new viewLoad(this);
     }
-
-    /**
-     * Create the view to select a board to load
-     */
-    private void createLoadView(){
-        LoadView loadView = new LoadView(this);
-    }
-
-
 }
