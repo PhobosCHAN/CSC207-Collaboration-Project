@@ -34,6 +34,15 @@ public class BattlePoint implements Serializable, Comparable<BattlePoint>{
         this.y = point.y;
     }
 
+
+    public int getX(){
+        return this.x;
+    }
+
+    public int getY(){
+        return this.y;
+    }
+
     /**
      * Returns true if two points are the same
      *
