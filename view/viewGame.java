@@ -72,8 +72,8 @@ public class viewGame {
     private void initUI() {
         this.paused = false;
         this.stage.setTitle("CSC207 Tetris");
-        this.width = this.model.getWidth()*pieceWidth + 2 ;
-        this.height = this.model.getHeight()*pieceWidth + 2;
+        //this.width = this.model.getWidth()*pieceWidth + 2 ;
+        //this.height = this.model.getHeight()*pieceWidth + 2;
 
         borderPane = new BorderPane();
         borderPane.setStyle("-fx-background-color: #121212;");
@@ -158,7 +158,7 @@ public class viewGame {
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         vBox.setAlignment(Pos.TOP_CENTER);
 
-        toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapPilot(newVal));
+        //toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapPilot(newVal));
 
         //timeline structures the animation, and speed between application "ticks"
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.25), e -> updateBoard()));
@@ -168,31 +168,26 @@ public class viewGame {
         //configure this such that you start a new game when the user hits the newButton
         //Make sure to return the focus to the borderPane once you're done!
         newButton.setOnAction(e -> {
-            model.newGame();
         });
 
         //configure this such that you restart the game when the user hits the startButton
         //Make sure to return the focus to the borderPane once you're done!
         startButton.setOnAction(e -> {
-            model.startGame();
         });
 
         //configure this such that you pause the game when the user hits the stopButton
         //Make sure to return the focus to the borderPane once you're done!
         stopButton.setOnAction(e -> {
-            model.stopGame();
         });
 
         //configure this such that the save view pops up when the saveButton is pressed.
         //Make sure to return the focus to the borderPane once you're done!
         saveButton.setOnAction(e -> {
-            createSaveView();
         });
 
         //configure this such that the load view pops up when the loadButton is pressed.
         //Make sure to return the focus to the borderPane once you're done!
         loadButton.setOnAction(e -> {
-            createLoadView();
         });
 
         //configure this such that you adjust the speed of the timeline to a value that
@@ -209,15 +204,6 @@ public class viewGame {
         borderPane.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent k) {
-                switch (k.getCode()) {
-                    case UP -> model.computeNewPosition(BattleModel.MoveType.ROTATE);
-                    case DOWN -> model.computeNewPosition(BattleModel.MoveType.DROP);
-                    case LEFT -> model.computeNewPosition(BattleModel.MoveType.LEFT);
-                    case RIGHT -> model.computeNewPosition(BattleModel.MoveType.RIGHT);
-                    default -> {
-                    }
-                }
-
             }
         });
 
@@ -236,8 +222,8 @@ public class viewGame {
      */
     private void updateBoard() {
         if (this.paused != true) {
-            paintBoard();
-            this.model.modelTick(BattleModel.MoveType.DOWN);
+            //paintBoard();
+            //this.model.modelTick(BattleModel.MoveType.DOWN);
             updateScore();
         }
     }
@@ -246,66 +232,15 @@ public class viewGame {
      * Update score on UI
      */
     private void updateScore() {
-        if (this.paused != true) {
-            scoreLabel.setText("Score is: " + model.getScore() + "\nPieces placed:" + model.getCount());
-        }
     }
 
     /**
      * Methods to calibrate sizes of pixels relative to board size
      */
-    private final int yPixel(int y) {
-        return (int) Math.round(this.height -1 - (y+1)*dY());
-    }
-    private final int xPixel(int x) {return (int) Math.round((x)*dX());}
-    private final float dX() {
-        return( ((float)(this.width-2)) / this.model.getBoard().getWidth() );
-    }
-    private final float dY() {
-        return( ((float)(this.height-2)) / this.model.getBoard().getHeight() );
-    }
+    //private final int yPixel(int y) {return (int) Math.round(this.height - 1 - (y + 1) * dY());}
+    //private final int xPixel(int x) {return (int) Math.round((x) * dX());}
 
-    /**
-     * Draw the board
-     */
-    public void paintBoard() {
+    //private final float dX() {return (((float) (this.width - 2)) / this.model.getBoard().getWidth());}
 
-        // Draw a rectangle around the whole screen
-        gc.setStroke(Color.GREEN);
-        gc.setFill(Color.GREEN);
-        gc.fillRect(0, 0, this.width-1, this.height-1);
-
-        // Draw the line separating the top area on the screen
-        gc.setStroke(Color.BLACK);
-        int spacerY = yPixel(this.model.getBoard().getHeight() - this.model.BUFFERZONE - 1);
-        gc.strokeLine(0, spacerY, this.width-1, spacerY);
-
-        // Factor a few things out to help the optimizer
-        final int dx = Math.round(dX()-2);
-        final int dy = Math.round(dY()-2);
-        final int bWidth = this.model.getBoard().getWidth();
-
-        int x, y;
-        // Loop through and draw all the blocks; sizes of blocks are calibrated relative to screen size
-        for (x=0; x<bWidth; x++) {
-            int left = xPixel(x);	// the left pixel
-            // draw from 0 up to the col height
-            final int yHeight = this.model.getBoard().getColumnHeight(x);
-            for (y=0; y<yHeight; y++) {
-                if (this.model.getBoard().getGrid(x, y)) {
-                    gc.setFill(Color.RED);
-                    gc.fillRect(left+1, yPixel(y)+1, dx, dy);
-                    gc.setFill(Color.GREEN);
-                }
-            }
-        }
-
-    }
-
-    /**
-     * Create the view to save or load a board to a file
-     */
-    private void createMemoryView(){
-        viewLoad loadView = new viewLoad(this);
-    }
+    //private final float dY() {return (((float) (this.height - 2)) / this.model.getBoard().getHeight());}
 }
