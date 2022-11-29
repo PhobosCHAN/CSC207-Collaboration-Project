@@ -11,6 +11,7 @@ public class Ship {
     int size;
     BattlePoint[] body; // y and x values that make up the body of this ship.
     int hp;
+    Ship next; //to store the next clockwise rotation
 
     /**
      * Defines a new ship given the type and size.
@@ -24,6 +25,7 @@ public class Ship {
         this.size = size;
         this.setBody();
         this.hp = this.body.length;
+        this.next = null;
     }
 
     public Ship(BattlePoint[] body) {
@@ -52,6 +54,45 @@ public class Ship {
         return this.hp;
     }
 
+    /**
+     * Returns a pre-computed ship that is 90 degrees clockwise
+     * rotated. Fast because the ship is pre-computed.
+     * This only works on pieces set up by Rotation(), and otherwise
+     * just returns null.
+     *
+     * @return the next rotation of the given ship
+     */
+    public Ship fastRotation() {
+        return next;
+    }
+
+    /**
+     * Given the "first" root rotation of a piece, computes all
+     * the other rotations and links them all together
+     * in a circular list. The list should loop back to the root as soon
+     * as possible.
+     * Return the root ship.
+     *
+     * @param ship the default rotation for a ship
+     *
+     * @return a ship that is a linked list containing all rotations for the ship
+     */
+    public static Ship makeFastRotations(Ship ship) {
+        Ship ship1 = ship; //Temporary variable to store the value of root
+        for(int i = 0; i <= 3; i++){
+            ship.next = ship.Rotation();
+            ship = ship.next;
+        }
+        ship = ship1;
+        return ship;
+    }
+
+    /**
+     * Returns a new ship that is 90 degrees clockwise
+     * rotated from the receiver.
+     *
+     * @return the next rotation of the given ship
+     */
     public Ship Rotation() {
         int shift = 0;//local variable to make sure there are no negative coordinates
         BattlePoint[] newBody = new BattlePoint[this.body.length];
