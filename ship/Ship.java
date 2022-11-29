@@ -2,6 +2,10 @@ package ship;
 
 import model.BattlePoint;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
 /** An immutable representation of a Ship in a particular rotation.
  *  Each ship is defined by the points that make up its body.
  */
@@ -39,6 +43,10 @@ public class Ship {
             BattlePoint battlePoint = new BattlePoint(0, i);
             body[i] = battlePoint;
         }
+    }
+
+    public BattlePoint[] getBody(){
+        return this.body;
     }
 
     public int getSize(){
@@ -111,4 +119,30 @@ public class Ship {
         return new Ship(newBody);
     }
 
+    /**
+     * Given a string of x,y pairs (e.g. "0 0 0 1 0 2 1 0"), parses
+     * the points into a Ship array.
+     *
+     * @param string input of x,y pairs
+     *
+     * @return an array of parsed points
+     */
+    private static BattlePoint[] parsePoints(String string) {
+        List<BattlePoint> points = new ArrayList<BattlePoint>();
+        StringTokenizer tok = new StringTokenizer(string);
+        try {
+            while(tok.hasMoreTokens()) {
+                int x = Integer.parseInt(tok.nextToken());
+                int y = Integer.parseInt(tok.nextToken());
+
+                points.add(new BattlePoint(x, y));
+            }
+        }
+        catch (NumberFormatException e) {
+            throw new RuntimeException("Could not parse x,y string:" + string);
+        }
+        // Make an array out of the collection
+        BattlePoint[] array = points.toArray(new BattlePoint[0]);
+        return array;
+    }
 }
