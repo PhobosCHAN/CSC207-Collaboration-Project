@@ -104,7 +104,7 @@ public class viewLoad {
         selectBoardBox.setAlignment(Pos.CENTER);
 
         dialogVbox.getChildren().add(selectBoardBox);
-        Scene dialogScene = new Scene(dialogVbox, 400, 400);
+        //Scene dialogScene = new Scene(dialogVbox, 400, 400);
         dialog.setScene(dialogScene);
         dialog.show();
         dialog.setOnCloseRequest(event -> {
@@ -181,7 +181,7 @@ public class viewLoad {
      * Save the board to a file
      */
     public void saveBoard() {
-        this.model = BattleModel.model;
+        //this.model = BattleModel.model;
         File directory = new File("Stack_Overload_Certified-CSC207/boards/");
         try {
             if (!saveFileNameTextField.getText(saveFileNameTextField.getLength() - 4, saveFileNameTextField.getLength()).equals(".ser")){
@@ -191,7 +191,7 @@ public class viewLoad {
             if (filename.exists()) {
                 throw new Exception(saveFileExistsError);
             } else {
-                model.saveModel(filename);
+                //model.saveModel(filename);
                 filename.createNewFile();
                 System.out.println(saveFileSuccess);
             }
