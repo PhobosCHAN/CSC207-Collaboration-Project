@@ -8,7 +8,7 @@ import java.util.Arrays;
     /** Represents a Board class for BattleShip.
      */
 public class BattleBoard implements Serializable {
-    public static int size; //board height and width
+    private int size; //board height and width
     protected boolean[][] battleGrid; //board grid
 
     //error types (to be returned by the place function)
@@ -22,7 +22,7 @@ public class BattleBoard implements Serializable {
      * @param size size
      */
     public BattleBoard(int size) {
-        BattleBoard.size = size;
+        this.size = size;
         this.battleGrid = new boolean[size][size];
     }
 
