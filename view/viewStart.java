@@ -55,7 +55,7 @@ public class viewStart {
         borderPane.setBottom(hbox);
 
         BorderPane root = new BorderPane();
-        Image img = new Image("C:\\Users\\14379\\IdeaProjects\\test\\src\\Images\\ship.png");
+        Image img = new Image("/Images/ship.png");
         BackgroundImage bImg = new BackgroundImage(img,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
@@ -104,7 +104,7 @@ public class viewStart {
         grid.add(title2, 2, 0);
 
         // Subtitle in columns 2-3, row 2
-        Text small = new Text("Choose you game mode:");
+        Text small = new Text("Choose your game mode:");
         small.setFont(Font.font("Arial", FontWeight.LIGHT, 25));
         small.setFill(Color.BLACK);
         grid.add(small, 1, 1, 2, 1);
