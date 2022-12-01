@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Stack_Overload_Certified-CSC207.iml" filepath="$PROJECT_DIR$/Stack_Overload_Certified-CSC207.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Stack_Overload_Certified-CSC207.iml" filepath="$PROJECT_DIR$/.idea/Stack_Overload_Certified-CSC207.iml" />
     </modules>
   </component>
 </project>
