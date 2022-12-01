@@ -1,5 +1,3 @@
-/**
-
 package ship;
 
 import model.BattlePoint;

@@ -1,5 +1,5 @@
 package model;
 
-public class
-BattleModel {
+public class BattleModel {
+
 }
