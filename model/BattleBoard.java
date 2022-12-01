@@ -109,7 +109,7 @@ public class BattleBoard implements Serializable {
      * @param x    placement position, x
      * @param y    placement position, y
      *             <p>
-     *             return A modified Ship whos points allign with the points on the board.
+     *             return A modified Ship whose points align with the points on the board.
      */
     private Ship modifyShip(Ship ship, int x, int y) {
         BattlePoint[] modifiedBody = new BattlePoint[ship.getBody().length];
