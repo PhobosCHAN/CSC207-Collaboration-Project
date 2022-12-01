@@ -2,26 +2,22 @@ package ship;
 
 import model.BattlePoint;
 
+import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
+
 /** An aircraft carrier ship that is the only ship with height as 2 since is spans over two rows.
  */
-public class Carrier extends Ship{
+public class Carrier implements Ship{
+    private BattlePoint[] body;
 
-    public Carrier(String type, int size) {
-        super(type, size);
-        this.hp = this.size * 2;
-        this.setBody();
+    public Carrier(BattlePoint[] body){
+        this.body = body;
+    }
+    public int getHP(){
+        return 5;
     }
 
     @Override
-    public void setBody() {
-        body = new BattlePoint[this.getSize() * 2];
-        for(int i = 0; i < this.getSize(); i++){
-            BattlePoint battlePoint = new BattlePoint(0, i);
-            body[i] = battlePoint;
-        }
-        for(int i = 0; i < this.getSize(); i++){
-            BattlePoint battlePoint = new BattlePoint(1, i);
-            body[i + this.getSize()] = battlePoint;
-        }
+    public BattlePoint[] getBody() {
+        return this.body;
     }
 }

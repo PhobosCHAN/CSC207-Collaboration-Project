@@ -16,7 +16,7 @@ public class BattleApp extends Application {
     /**
      * Main method
      *
-     * @param args agument, if any
+     * @param args argument, if any
      */
     public static void main(String[] args) {
         launch(args);
