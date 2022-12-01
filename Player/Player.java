@@ -14,9 +14,21 @@ public class Player {
     public Player(Ship[] ships, boolean fastMode){
         this.ships = ships;
         if(fastMode)
-            hp = HP.getInstance().hp_small;
+            this.hp = HP.getInstance().hp_small;
         else
-            hp = HP.getInstance().hp_large;
+            this.hp = HP.getInstance().hp_large;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void gotHit(Ship ship){
+        this.hp -= 1;
+        for (Ship value : ships) {
+            if (ship == value)
+                value.gotHit();
+        }
     }
 
 

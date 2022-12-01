@@ -45,37 +45,37 @@ public class BattleBoard implements Serializable {
 
     /**
      * Returns true if the given block is filled in the board. Blocks outside the
-     * valid width/height area always return true (as we can't place anything there).
+     * valid width/height area always return false (as there are no ships present there).
      *
      * @param x grid position, x
      * @param y grid position, y
      * @return true if the given block at x,y is filled, else false
      */
     public boolean getGrid(int x, int y) {
-        return x >= size || x < 0 || y >= size || y < 0 || battleGrid[x][y];
+        if(x >= size || x < 0 || y >= size || y < 0)
+            return false;
+        return battleGrid[x][y];
     }
 
     /**
-     * Attempts to add the body of a piece to the board. Copies the piece blocks into the board grid.
-     * Returns ADD_OK for a regular placement, or ADD_ROW_FILLED
-     * for a regular placement that causes at least one row to be filled.
-     * <p>
+     * Attempts to add the body of a Ship to the board. Copies the ship blocks into the board grid.
+     * Returns ADD_OK for a regular placement
      * Error cases:
-     * A placement may fail in two ways. First, if part of the piece may fall out
+     * A placement may fail in two ways. First, if part of the ship may fall out
      * of bounds of the board, ADD_OUT_BOUNDS is returned.
-     * Or the placement may collide with existing blocks in the grid
+     * Or the placement may collide with existing ships in the grid
      * in which case ADD_BAD is returned.
      * In both error cases, the board may be left in an invalid
-     * state. The client can use undo(), to recover the valid, pre-place state.
+     * state.
      *
      * @param ship ship to place
      * @param x    placement position, x
      * @param y    placement position, y
      * @return static int that defines result of placement
      */
-    public int placePiece(Ship ship, int x, int y) {
+    public int placeShip(Ship ship, int x, int y) {
 
-        //changing coordinates of the piece to align with the coordinates of the board
+        //changing coordinates of the ship to align with the coordinates of the board
         Ship modifiedShip = modifyShip(ship, x, y);
         //Checks if the provided coordinates are out of bounds
         if ((x >= size || x < 0) || (y >= size || y < 0)) {

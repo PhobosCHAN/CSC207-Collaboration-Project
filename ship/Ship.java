@@ -62,6 +62,10 @@ public class Ship {
         return this.hp;
     }
 
+    public void gotHit(){
+        this.hp -= 1;
+    }
+
     /**
      * Returns a pre-computed ship that is 90 degrees clockwise
      * rotated. Fast because the ship is pre-computed.
