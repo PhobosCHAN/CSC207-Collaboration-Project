@@ -1,4 +1,3 @@
-
 package ship;
 
 import model.BattlePoint;
@@ -7,21 +6,21 @@ import model.BattlePoint;
  *  Each ship is defined by the points that make up its body.
  */
 
-public interface Ship {
-    public int getHP();
-    public BattlePoint[] getBody();
-
-
-
-    /**
+public class Ship {
     String type;
     int size;
     BattlePoint[] body; // y and x values that make up the body of this ship.
     int hp;
 
+    public Ship(String type, int size) {
+        this.type = type;
+        this.size = size;
+        this.hp = this.size;
+        this.setBody();
+    }
+
     public Ship(BattlePoint[] body) {
         this.body = body;
-        this.hp = body.length;
 
     }
 
@@ -59,9 +58,4 @@ public interface Ship {
         }
         return new Ship(newBody);
     }
-
-    public BattlePoint[] getBody(){
-        return this.body;
-    }
-     */
 }

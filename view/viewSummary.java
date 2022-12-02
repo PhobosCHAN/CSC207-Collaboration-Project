@@ -1,5 +1,4 @@
 package view;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -39,10 +38,9 @@ import javafx.stage.Stage;
  */
 public class viewSummary {
     Stage stage;
-
     //BattleModel model;
     BorderPane borderPane;
-    Button settingsButton, gameStartButton, loadButton;
+    Button closeButton, playAgainButton, proceedButton;
     private double width; //height and width of canvas
     private double height;
 
@@ -56,27 +54,34 @@ public class viewSummary {
         this.height = 100;
         this.borderPane = new BorderPane();
 
-        borderPane.setTop(summary());
-        HBox hbox = setupH();
-        borderPane.setBottom(hbox);
+        proceedButton = new Button("PROCEED");
+        proceedButton.setId("proceed");
+        proceedButton.setPrefSize(150, 50);
+        proceedButton.setFont(new Font(12));
+        proceedButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-
-        BorderPane root = new BorderPane();
+        HBox b1 = new HBox(20,proceedButton);
+        b1.setPadding(new Insets(20, 20, 20, 20));
+        b1.setAlignment(Pos.BOTTOM_RIGHT);
+        borderPane.setBottom(b1);
         //if (Winner == Player)
         // Image img = new Image("C:\Users\14379\IdeaProjects\test\src\Images\ReallyWinImg.png");
         //else
-        Image img = new Image("C:\\Users\\14379\\IdeaProjects\\test\\src\\Images\\ReallyLoseImg.png");
+        BorderPane root = new BorderPane();
+        Image img = new Image("ReallyLoseImg.png");
         BackgroundImage bImg = new BackgroundImage(img,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
+                BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
+        proceedButton.setOnAction(e ->{
+            stats();
+        });
         Background bGround = new Background(bImg);
         root.setBackground(bGround);
-        //borderPane.setStyle("-fx-background-color: #2f4f4f;");
         root.setCenter(borderPane);
         // Set the Size of the VBox
-        root.setPrefSize(700, 600);
+        root.setPrefSize(900, 538);
         // Set the Style-properties of the BorderPane
         root.setStyle("-fx-padding: 10;" +
                 "-fx-border-style: solid inside;" +
@@ -84,17 +89,48 @@ public class viewSummary {
                 "-fx-border-insets: 5;" +
                 "-fx-border-radius: 5;" +
                 "-fx-border-color: blue;");
-
         Scene scene = new Scene(root);
         // Add the scene to the Stage
         this.stage.setScene(scene);
         // Set the title of the Stage (Window of the Game)
-        this.stage.setTitle("SOC BATTLESHIP GAME");
+        this.stage.setTitle("CREDITS PAGE");
         // Display the Stage
         this.stage.show();
         //borderPane.setCenter(vbox);
     }
 
+    public void stats(){
+        //BorderPane stats = new BorderPane();
+        this.borderPane.setCenter(summary());
+        this.borderPane.setBottom(setupV());
+        BorderPane root2 = new BorderPane();
+        //root2.getChildren().add(stats);
+        Image img = new Image("sea.png");
+        BackgroundImage bImg = new BackgroundImage(img,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        Background bGround = new Background(bImg);
+        root2.setBackground(bGround);
+        root2.setCenter(borderPane);
+        // Set the Size of the VBox
+        root2.setPrefSize(900, 538);
+        // Set the Style-properties of the BorderPane
+        root2.setStyle("-fx-padding: 10;" +
+                "-fx-border-style: solid inside;" +
+                "-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: blue;");
+        Scene scene2 = new Scene(root2);
+        this.stage.setScene(scene2);
+        // Set the title of the Stage (Window of the Game)
+        this.stage.setTitle("SUMMARY PAGE");
+        // Display the Stage
+        this.stage.show();
+        //borderPane.setCenter(vbox);
+    }
     public GridPane summary(){
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -103,71 +139,47 @@ public class viewSummary {
 
         Text title1 = new Text("Game Mode: "); //  wanna add + getGameMode()
         title1.setFill(Color.ORANGE);
-        title1.setFont(Font.font("Arial", FontWeight.BOLD, 40));
-        grid.add(title1, 1, 0);
+        title1.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
+        grid.add(title1, 1, 5);
 
         Text title2 = new Text("Winner: "); // want to add which player won
         title2.setFill(Color.ORANGE);
-        title2.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 40));
-        grid.add(title2, 2, 1);
+        title2.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
+        grid.add(title2, 1, 6);
 
         // Subtitle in columns 2-3, row 2
         Text small = new Text("Player's Accuracy For The Entire Game: "); //+ calculatePaccuracy
-        small.setFont(Font.font("Arial", FontWeight.LIGHT, 25));
-        small.setFill(Color.RED);
-        grid.add(small, 1, 1, 2, 1);
+        small.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
+        small.setFill(Color.ORANGE);
+        grid.add(small, 1, 7);
         Text small2 = new Text("Computer's Accuracy For The Entire Game: "); //+ calculateCaccuracy
-        small2.setFont(Font.font("Arial", FontWeight.LIGHT, 25));
-        small2.setFill(Color.RED);
-        grid.add(small2, 1, 1, 2, 1);
+        small2.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
+        small2.setFill(Color.ORANGE);
+        grid.add(small2, 1, 8);
         return grid;
     }
 
-    public HBox setupH(){
-        HBox hbox = new HBox();
-        //v is for the top adjustment, v2 is the bottom adjustment
-        hbox.setPadding(new Insets(10, 20, 10, 20));
-        hbox.setSpacing(20);
-        hbox.setAlignment(Pos.CENTER);
-        hbox.setStyle("-fx-background-color: #336699;");
-
-        gameStartButton = new Button("GAME START");
-        gameStartButton.setId("start");
-        gameStartButton.setPrefSize(150, 50);
-        gameStartButton.setFont(new Font(12));
-        gameStartButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
-
-        settingsButton = new Button("SETTINGS");
-        settingsButton.setId("setting");
-        settingsButton.setPrefSize(150, 50);
-        settingsButton.setFont(new Font(12));
-        settingsButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
-
-        loadButton = new Button("LOAD GAME");
-        loadButton.setId("load");
-        loadButton.setPrefSize(150, 50);
-        loadButton.setFont(new Font(12));
-        loadButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
-        hbox.getChildren().addAll(gameStartButton, loadButton, settingsButton);
-        return hbox;
-    }
-
     public VBox setupV(){
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.setId("Game Mode Select:");
-        choiceBox.getItems().add("Normal Game (5 v 5)");
-        choiceBox.getItems().add("Rush Game (3 v 3)");
-        choiceBox.setValue("Normal Game (5 v 5)"); // Default game mode
+        closeButton = new Button("CLOSE");
+        closeButton.setId("close");
+        closeButton.setPrefSize(150, 50);
+        closeButton.setFont(new Font(12));
+        closeButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-        VBox screen = new VBox(10);
-        screen.setPadding(new Insets(0, 10 , 20, 300));
-        screen.getChildren().addAll(choiceBox);
-        choiceBox.setOnAction((event) -> {
-            int selectedIndex = choiceBox.getSelectionModel().getSelectedIndex();
-            Object selectedItem = choiceBox.getSelectionModel().getSelectedItem();
-            System.out.println("Selection made: [" + selectedIndex + "] " + selectedItem);
-            System.out.println("   ChoiceBox.getValue(): " + choiceBox.getValue());
+        playAgainButton = new Button("PLAY AGAIN");
+        playAgainButton.setId("playA");
+        playAgainButton.setPrefSize(150, 50);
+        playAgainButton.setFont(new Font(12));
+        playAgainButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+
+        closeButton.setOnAction(e ->{
         });
+
+        playAgainButton.setOnAction(e ->{
+        });
+        VBox screen = new VBox(10);
+        screen.setAlignment(Pos.BOTTOM_CENTER);;
+        screen.getChildren().addAll(closeButton, playAgainButton);
         return screen;
     }
 }
