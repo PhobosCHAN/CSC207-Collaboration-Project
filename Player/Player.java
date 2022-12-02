@@ -1,7 +1,5 @@
 package Player;
 
-import model.BattleBoard;
-import model.BattlePoint;
 import model.HP;
 import ship.Ship;
 
@@ -23,12 +21,8 @@ public class Player {
         return hp;
     }
 
-    public void gotHit(Ship ship){
+    public void gotHit(){
         this.hp -= 1;
-        for (Ship value : ships) {
-            if (ship == value)
-                value.gotHit();
-        }
     }
 
 
