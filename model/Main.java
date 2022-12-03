@@ -59,6 +59,11 @@ public class Main extends Application {
             Ship ship3 = shipFactory.getShip(4, new BattlePoint[0], true);
             Ship ship4 = shipFactory.getShip(3, new BattlePoint[0], true);
             Ship ship5 = shipFactory.getShip(3, new BattlePoint[0], true);
+            Ship ship6 = shipFactory.getShip(5, new BattlePoint[0], true);
+            Ship ship7 = shipFactory.getShip(4, new BattlePoint[0], true);
+            Ship ship8 = shipFactory.getShip(4, new BattlePoint[0], true);
+            Ship ship9 = shipFactory.getShip(3, new BattlePoint[0], true);
+            Ship ship10 = shipFactory.getShip(3, new BattlePoint[0], true);
             shipsHuman = new Ship[5];
             shipsHuman[0] = ship1;
             shipsHuman[1] = ship2;
@@ -66,23 +71,26 @@ public class Main extends Application {
             shipsHuman[3] = ship4;
             shipsHuman[4] = ship5;
             shipsComputer = new Ship[5];
-            shipsComputer[0] = ship1;
-            shipsComputer[1] = ship2;
-            shipsComputer[2] = ship3;
-            shipsComputer[3] = ship4;
-            shipsComputer[4] = ship5;
+            shipsComputer[0] = ship6;
+            shipsComputer[1] = ship7;
+            shipsComputer[2] = ship8;
+            shipsComputer[3] = ship9;
+            shipsComputer[4] = ship10;
         } else if (choice == 2) { // Configured: For the 3v3 game mode.
             Ship ship3 = shipFactory.getShip(4, new BattlePoint[0], true);
             Ship ship4 = shipFactory.getShip(3, new BattlePoint[0], true);
             Ship ship5 = shipFactory.getShip(3, new BattlePoint[0], true);
+            Ship ship8 = shipFactory.getShip(4, new BattlePoint[0], true);
+            Ship ship9 = shipFactory.getShip(3, new BattlePoint[0], true);
+            Ship ship10 = shipFactory.getShip(3, new BattlePoint[0], true);
             shipsHuman = new Ship[3];
             shipsHuman[0] = ship3;
             shipsHuman[1] = ship4;
             shipsHuman[2] = ship5;
             shipsComputer = new Ship[3];
-            shipsComputer[0] = ship3;
-            shipsComputer[1] = ship4;
-            shipsComputer[2] = ship5;
+            shipsComputer[0] = ship8;
+            shipsComputer[1] = ship9;
+            shipsComputer[2] = ship10;
         }
     }
 
