@@ -5,13 +5,16 @@ import java.util.List;
 
 import Player.Player;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import ship.Ship;
 
 
@@ -22,20 +25,15 @@ public class Board extends Parent {
 
     public Board(boolean enemy, EventHandler<? super MouseEvent> handler) {
         this.enemy = enemy;
-        for (int y = 0; y < 11; y++) {
+        for (int y = 0; y < 10; y++) {
             HBox row = new HBox();
-            for (int x = 0; x < 11; x++) {
-                if ( x == 0){
-
-                }
+            for (int x = 0; x < 10; x++) {
                 Cell c = new Cell(x, y, this);
                 c.setOnMouseClicked(handler);
                 row.getChildren().add(c);
             }
-
             rows.getChildren().add(row);
         }
-
         getChildren().add(rows);
     }
 
