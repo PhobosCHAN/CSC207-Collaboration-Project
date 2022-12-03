@@ -44,7 +44,7 @@ public class viewStart {
     public viewStart(Stage stage, Main main){
         this.main = main;
         this.stage = stage;
-        this.choice = 1;
+        this.choice = 10;
         initUI();
     }
 
@@ -189,10 +189,10 @@ public class viewStart {
             int selectedChoice = accessibilityBox.getSelectionModel().getSelectedIndex();
             Object selectedOption = accessibilityBox.getSelectionModel().getSelectedItem();
             if (selectedChoice == 0){
-                this.choice = 1;
+                this.choice = 10;
             }
             else if(selectedChoice == 1){
-                this.choice = 2;
+                this.choice = 7;
             }
             System.out.println("Selection choice: [" + selectedChoice + "] " + selectedOption);
             System.out.println("   accessibilityBox.getValue(): " + accessibilityBox.getValue());

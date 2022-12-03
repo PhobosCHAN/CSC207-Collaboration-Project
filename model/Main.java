@@ -53,7 +53,7 @@ public class Main extends Application {
         currentShipIndex = 0;
         ComputerCurrentIndex = 0;
         ShipFactory shipFactory = new ShipFactory();
-        if (choice == 1){
+        if (choice == 10){
             Ship ship1 = shipFactory.getShip(5, new BattlePoint[0], true);
             Ship ship2 = shipFactory.getShip(4, new BattlePoint[0], true);
             Ship ship3 = shipFactory.getShip(4, new BattlePoint[0], true);
@@ -76,7 +76,7 @@ public class Main extends Application {
             shipsComputer[2] = ship8;
             shipsComputer[3] = ship9;
             shipsComputer[4] = ship10;
-        } else if (choice == 2) { // Configured: For the 3v3 game mode.
+        } else if (choice == 7) { // Configured: For the 3v3 game mode.
             Ship ship3 = shipFactory.getShip(4, new BattlePoint[0], true);
             Ship ship4 = shipFactory.getShip(3, new BattlePoint[0], true);
             Ship ship5 = shipFactory.getShip(3, new BattlePoint[0], true);
@@ -128,32 +128,35 @@ public class Main extends Application {
             shipsHuman[currentShipIndex].setVertical(vert);
             shipsHuman[currentShipIndex].setBody(vert, cell.x, cell.y);
             if (playerBoard.placeShip(shipsHuman[currentShipIndex], cell.x, cell.y)) {
-                if ((currentShipIndex + 1) == 5 & choice == 1) {
+                if ((currentShipIndex + 1) == 5 & choice == 10) {
                     startGame();
                 }
                 // Configured: For the 3v3 game mode.
-                else if ((currentShipIndex + 1) == 3 & choice == 2){
+                else if ((currentShipIndex + 1) == 3 & choice == 7){
                     startGame();
                 }
                 currentShipIndex++;
             }
         });
-        Text text = new Text();
-        text.setText("    0         1         2         3         4         5         6         7        8        9");
-        Text text2 = new Text();
-        text2.setText("    0         1         2         3         4         5         6         7        8        9");
-        VBox vbox = new VBox(10, text, enemyBoard, text2, playerBoard);
-        VBox part1 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                new Text("6"), new Text("7"), new Text("8"), new Text("9"));
-        VBox part2 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                new Text("6"), new Text("7"), new Text("8"), new Text("9"));
-        VBox spacing = new VBox(5, new Text(" "), new Text(" "));
-        VBox vbox2 = new VBox(10, part1, spacing, part2);
-        vbox2.setPadding(new Insets(35, 0, 1, 0));
-        HBox hbox = new HBox(10, vbox2, vbox);
-        hbox.setPadding(new Insets(5, 2, 5, 1));
-        hbox.setAlignment(Pos.CENTER);
-        root.setCenter(hbox);
+        if (choice == 10){
+            Text text = new Text();
+            text.setText("    0         1         2         3         4         5         6         7        8        9");
+            Text text2 = new Text();
+            text2.setText("    0         1         2         3         4         5         6         7        8        9");
+            VBox vbox = new VBox(10, text, enemyBoard, text2, playerBoard);
+            VBox part1 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
+                    new Text("6"), new Text("7"), new Text("8"), new Text("9"));
+            VBox part2 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
+                    new Text("6"), new Text("7"), new Text("8"), new Text("9"));
+            VBox spacing = new VBox(5, new Text(" "), new Text(" "));
+            VBox vbox2 = new VBox(10, part1, spacing, part2);
+            vbox2.setPadding(new Insets(35, 0, 1, 0));
+            HBox hbox = new HBox(10, vbox2, vbox);
+            hbox.setPadding(new Insets(5, 2, 5, 1));
+            hbox.setAlignment(Pos.CENTER);
+            root.setCenter(hbox);
+        }
+
         return root;
     }
 

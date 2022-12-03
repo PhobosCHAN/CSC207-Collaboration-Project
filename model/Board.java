@@ -27,7 +27,7 @@ public class Board extends Parent {
 
     public Board(boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
         int grid = 0;
-        if (choice == 1){
+        if (choice == 10){
             grid = 10;
         }
         else{
