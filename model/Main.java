@@ -80,14 +80,17 @@ public class Main extends Application {
             Ship ship3 = shipFactory.getShip(4, new BattlePoint[0], true);
             Ship ship4 = shipFactory.getShip(3, new BattlePoint[0], true);
             Ship ship5 = shipFactory.getShip(3, new BattlePoint[0], true);
+            Ship ship8 = shipFactory.getShip(4, new BattlePoint[0], true);
+            Ship ship9 = shipFactory.getShip(3, new BattlePoint[0], true);
+            Ship ship10 = shipFactory.getShip(3, new BattlePoint[0], true);
             shipsHuman = new Ship[3];
             shipsHuman[0] = ship3;
             shipsHuman[1] = ship4;
             shipsHuman[2] = ship5;
             shipsComputer = new Ship[3];
-            shipsComputer[0] = ship3;
-            shipsComputer[1] = ship4;
-            shipsComputer[2] = ship5;
+            shipsComputer[0] = ship8;
+            shipsComputer[1] = ship9;
+            shipsComputer[2] = ship10;
         }
     }
 
