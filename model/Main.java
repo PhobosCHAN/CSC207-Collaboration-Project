@@ -156,7 +156,24 @@ public class Main extends Application {
             hbox.setAlignment(Pos.CENTER);
             root.setCenter(hbox);
         }
-
+        else if (choice == 7){
+            Text text = new Text();
+            text.setText("    0         1         2         3         4         5         6");
+            Text text2 = new Text();
+            text2.setText("    0         1         2         3         4         5         6");
+            VBox vbox = new VBox(10, text, enemyBoard, text2, playerBoard);
+            VBox part1 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
+                    new Text("6"));
+            VBox part2 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
+                    new Text("6"));
+            VBox spacing = new VBox(5, new Text(" "), new Text(" "));
+            VBox vbox2 = new VBox(10, part1, spacing, part2);
+            vbox2.setPadding(new Insets(35, 0, 1, 0));
+            HBox hbox = new HBox(10, vbox2, vbox);
+            hbox.setPadding(new Insets(5, 2, 5, 1));
+            hbox.setAlignment(Pos.CENTER);
+            root.setCenter(hbox);
+        }
         return root;
     }
 

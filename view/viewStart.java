@@ -177,10 +177,10 @@ public class viewStart {
             int selectedIndex = choiceBox.getSelectionModel().getSelectedIndex();
             Object selectedItem = choiceBox.getSelectionModel().getSelectedItem();
             if (selectedIndex == 0){
-                this.choice = 1;
+                this.choice = 10;
             }
             else if(selectedIndex == 1){
-                this.choice = 2;
+                this.choice = 7;
             }
             System.out.println("Selection made: [" + selectedIndex + "] " + selectedItem);
             System.out.println("   ChoiceBox.getValue(): " + choiceBox.getValue());
