@@ -22,9 +22,12 @@ public class Board extends Parent {
 
     public Board(boolean enemy, EventHandler<? super MouseEvent> handler) {
         this.enemy = enemy;
-        for (int y = 0; y < 10; y++) {
+        for (int y = 0; y < 11; y++) {
             HBox row = new HBox();
-            for (int x = 0; x < 10; x++) {
+            for (int x = 0; x < 11; x++) {
+                if ( x == 0){
+
+                }
                 Cell c = new Cell(x, y, this);
                 c.setOnMouseClicked(handler);
                 row.getChildren().add(c);
@@ -45,8 +48,8 @@ public class Board extends Parent {
                     Cell cell = getCell(x, i);
                     cell.ship = ship;
                     if (!enemy) {
-                        cell.setFill(Color.WHITE);
-                        cell.setStroke(Color.GREEN);
+                        cell.setFill(Color.GRAY);
+                        cell.setStroke(Color.BLACK);
                     }
                 }
             }
@@ -55,8 +58,8 @@ public class Board extends Parent {
                     Cell cell = getCell(i, y);
                     cell.ship = ship;
                     if (!enemy) {
-                        cell.setFill(Color.WHITE);
-                        cell.setStroke(Color.GREEN);
+                        cell.setFill(Color.GRAY);
+                        cell.setStroke(Color.BLACK);
                     }
                 }
             }
@@ -153,8 +156,8 @@ public class Board extends Parent {
             this.x = x;
             this.y = y;
             this.board = board;
-            setFill(Color.LIGHTGRAY);
-            setStroke(Color.BLACK);
+            setFill(Color.LIGHTBLUE);
+            setStroke(Color.BLUE);
         }
 
         public boolean shoot(Player player) {
