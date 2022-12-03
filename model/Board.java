@@ -5,13 +5,16 @@ import java.util.List;
 
 import Player.Player;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import ship.Ship;
 
 
@@ -29,10 +32,8 @@ public class Board extends Parent {
                 c.setOnMouseClicked(handler);
                 row.getChildren().add(c);
             }
-
             rows.getChildren().add(row);
         }
-
         getChildren().add(rows);
     }
 
@@ -45,8 +46,8 @@ public class Board extends Parent {
                     Cell cell = getCell(x, i);
                     cell.ship = ship;
                     if (!enemy) {
-                        cell.setFill(Color.WHITE);
-                        cell.setStroke(Color.GREEN);
+                        cell.setFill(Color.GRAY);
+                        cell.setStroke(Color.BLACK);
                     }
                 }
             }
@@ -55,8 +56,8 @@ public class Board extends Parent {
                     Cell cell = getCell(i, y);
                     cell.ship = ship;
                     if (!enemy) {
-                        cell.setFill(Color.WHITE);
-                        cell.setStroke(Color.GREEN);
+                        cell.setFill(Color.GRAY);
+                        cell.setStroke(Color.BLACK);
                     }
                 }
             }
@@ -153,8 +154,8 @@ public class Board extends Parent {
             this.x = x;
             this.y = y;
             this.board = board;
-            setFill(Color.LIGHTGRAY);
-            setStroke(Color.BLACK);
+            setFill(Color.LIGHTBLUE);
+            setStroke(Color.BLUE);
         }
 
         public boolean shoot(Player player) {
