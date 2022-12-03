@@ -103,7 +103,7 @@ public class Main extends Application {
         root.setPrefSize(800, 700);
         //add a new node here to show ships hp
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
-        enemyBoard = new Board(true, event -> {
+        enemyBoard = new Board(true, choice, event -> {
             if (!running)
                 return;
 
@@ -119,7 +119,7 @@ public class Main extends Application {
             if (enemyTurn){
                 enemyMove();}
         });
-        playerBoard = new Board(false, event -> {
+        playerBoard = new Board(false, choice, event -> {
             if (running)
                 return;
 

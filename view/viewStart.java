@@ -149,6 +149,9 @@ public class viewStart {
             this.stage.show();
         });
 
+        loadButton.setOnAction(e ->{
+        });
+
         hbox.getChildren().addAll(gameStartButton, loadButton);
         return hbox;
     }
