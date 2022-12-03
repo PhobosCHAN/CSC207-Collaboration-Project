@@ -154,6 +154,7 @@ public class Main extends Application {
             HBox hbox = new HBox(10, vbox2, vbox);
             hbox.setPadding(new Insets(5, 2, 5, 1));
             hbox.setAlignment(Pos.CENTER);
+            hbox.setAlignment(Pos.CENTER);
             root.setCenter(hbox);
         }
         else if (choice == 7){
@@ -195,9 +196,7 @@ public class Main extends Application {
                 StrategyHit strategy = new StrategyHit();
                 int[] val = strategy.execute(human, playerBoard, lastX, lastY);
                 if(val[0] == 0)
-                    enemyTurn = false;
-                else
-                    enemyTurn = true;
+                    continue;
                 lastX = val[1];
                 lastY = val[2];
             }
@@ -212,8 +211,8 @@ public class Main extends Application {
         // place enemy ships
         // Configured: For the 3v3 game mode. From < 5 to < shipsComputer.length
         while(ComputerCurrentIndex < shipsComputer.length){
-            int x = random.nextInt(10);
-            int y = random.nextInt(10);
+            int x = random.nextInt(choice);
+            int y = random.nextInt(choice);
             boolean vert = Math.random() < 0.5;
             shipsComputer[ComputerCurrentIndex].setVertical(vert);
             shipsComputer[ComputerCurrentIndex].setBody(vert, x, y);

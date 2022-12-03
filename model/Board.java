@@ -26,17 +26,16 @@ public class Board extends Parent {
     public int grid;
 
     public Board(boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
-        int grid = 0;
         if (choice == 10){
-            grid = 10;
+            this.grid = 10;
         }
         else{
-            grid = 7;
+            this.grid = 7;
         }
         this.enemy = enemy;
-        for (int y = 0; y < grid; y++) {
+        for (int y = 0; y < this.grid; y++) {
             HBox row = new HBox();
-            for (int x = 0; x < grid; x++) {
+            for (int x = 0; x < this.grid; x++) {
                 Cell c = new Cell(x, y, this);
                 c.setOnMouseClicked(handler);
                 row.getChildren().add(c);
@@ -148,7 +147,7 @@ public class Board extends Parent {
     }
 
     private boolean isValidPoint(double x, double y) {
-        return x >= 0 && x < grid && y >= 0 && y < grid;
+        return x >= 0 && x < this.grid && y >= 0 && y < this.grid;
     }
 
     public class Cell extends Rectangle {
