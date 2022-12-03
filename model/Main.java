@@ -2,8 +2,9 @@ package model;
 
 import java.awt.*;
 import java.util.Random;
+import view.viewSummary;
 
-
+import view.viewStart;
 import Player.Player;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -23,6 +24,7 @@ import ship.ShipFactory;
 
 public class Main extends Application {
 
+    Stage stage;
     private boolean running = false;
     private model.Board enemyBoard, playerBoard;
 
@@ -34,6 +36,8 @@ public class Main extends Application {
 
     private int lastX, lastY;
 
+    private int choice;
+
     private boolean enemyTurn = false;
 
     Player human;
@@ -41,36 +45,52 @@ public class Main extends Application {
 
     private Random random = new Random();
 
-    public void populatePlayerShips(){
+    public void populatePlayerShips(int choice){
+        this.choice = choice;
         currentShipIndex = 0;
         ComputerCurrentIndex = 0;
         ShipFactory shipFactory = new ShipFactory();
-        Ship ship1 = shipFactory.getShip(5, new BattlePoint[0], true);
-        Ship ship2 = shipFactory.getShip(4, new BattlePoint[0], true);
-        Ship ship3 = shipFactory.getShip(4, new BattlePoint[0], true);
-        Ship ship4 = shipFactory.getShip(3, new BattlePoint[0], true);
-        Ship ship5 = shipFactory.getShip(3, new BattlePoint[0], true);
-        shipsHuman = new Ship[5];
-        shipsHuman[0] = ship1;
-        shipsHuman[1] = ship2;
-        shipsHuman[2] = ship3;
-        shipsHuman[3] = ship4;
-        shipsHuman[4] = ship5;
-        shipsComputer = new Ship[5];
-        shipsComputer[0] = ship1;
-        shipsComputer[1] = ship2;
-        shipsComputer[2] = ship3;
-        shipsComputer[3] = ship4;
-        shipsComputer[4] = ship5;
+        if (choice == 1){
+            Ship ship1 = shipFactory.getShip(5, new BattlePoint[0], true);
+            Ship ship2 = shipFactory.getShip(4, new BattlePoint[0], true);
+            Ship ship3 = shipFactory.getShip(4, new BattlePoint[0], true);
+            Ship ship4 = shipFactory.getShip(3, new BattlePoint[0], true);
+            Ship ship5 = shipFactory.getShip(3, new BattlePoint[0], true);
+            shipsHuman = new Ship[5];
+            shipsHuman[0] = ship1;
+            shipsHuman[1] = ship2;
+            shipsHuman[2] = ship3;
+            shipsHuman[3] = ship4;
+            shipsHuman[4] = ship5;
+            shipsComputer = new Ship[5];
+            shipsComputer[0] = ship1;
+            shipsComputer[1] = ship2;
+            shipsComputer[2] = ship3;
+            shipsComputer[3] = ship4;
+            shipsComputer[4] = ship5;
+        } else if (choice == 2) { // Configured: For the 3v3 game mode.
+            Ship ship3 = shipFactory.getShip(4, new BattlePoint[0], true);
+            Ship ship4 = shipFactory.getShip(3, new BattlePoint[0], true);
+            Ship ship5 = shipFactory.getShip(3, new BattlePoint[0], true);
+            shipsHuman = new Ship[3];
+            shipsHuman[0] = ship3;
+            shipsHuman[1] = ship4;
+            shipsHuman[2] = ship5;
+            shipsComputer = new Ship[3];
+            shipsComputer[0] = ship3;
+            shipsComputer[1] = ship4;
+            shipsComputer[2] = ship5;
+        }
     }
 
-    private Parent createContent() {
-        this.populatePlayerShips();
+    public Parent createContent(int choice, Stage stage) {
+        this.stage = stage;
+        this.populatePlayerShips(choice);
         human = new Player(shipsHuman, false);
         computer = new Player(shipsComputer, false);
         BorderPane root = new BorderPane();
-        root.setPrefSize(600, 800);
-
+        root.setPrefSize(800, 700);
+        //add a new node here to show ships hp
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
 
         enemyBoard = new Board(true, event -> {
@@ -84,14 +104,13 @@ public class Main extends Application {
             enemyTurn = !cell.shoot(computer);
 
             if (enemyBoard.ships == 0) {
+                viewSummary summary = new viewSummary(this.stage, 1, this, this.choice);
                 System.out.println("YOU WIN");
-                System.exit(0);
+                //System.exit(0);
             }
-
             if (enemyTurn){
                 enemyMove();}
         });
-
         playerBoard = new Board(false, event -> {
             if (running)
                 return;
@@ -101,7 +120,11 @@ public class Main extends Application {
             shipsHuman[currentShipIndex].setVertical(vert);
             shipsHuman[currentShipIndex].setBody(vert, cell.x, cell.y);
             if (playerBoard.placeShip(shipsHuman[currentShipIndex], cell.x, cell.y)) {
-                if ((currentShipIndex + 1) == 5) {
+                if ((currentShipIndex + 1) == 5 & choice == 1) {
+                    startGame();
+                }
+                // Configured: For the 3v3 game mode.
+                else if ((currentShipIndex + 1) == 3 & choice == 2){
                     startGame();
                 }
                 currentShipIndex++;
@@ -142,8 +165,9 @@ public class Main extends Application {
                 lastY = val[2];
             }
             if (playerBoard.ships == 0) {
+                viewSummary summary = new viewSummary(this.stage, 2, this, this.choice); // Let 1 represent Player and 2 represent Computer
                 System.out.println("YOU LOSE");
-                System.exit(0);
+                //System.exit(0);
             }
 
         }
@@ -151,7 +175,8 @@ public class Main extends Application {
 
     private void startGame() {
         // place enemy ships
-        while(ComputerCurrentIndex < 5){
+        // Configured: For the 3v3 game mode. From < 5 to < shipsComputer.length
+        while(ComputerCurrentIndex < shipsComputer.length){
             int x = random.nextInt(10);
             int y = random.nextInt(10);
             boolean vert = Math.random() < 0.5;
@@ -167,11 +192,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(createContent());
-        primaryStage.setTitle("Battleship");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        viewStart start = new viewStart(primaryStage, this);
     }
 
     public static void main(String[] args) {
