@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 
 public class viewSettings{
     Stage stage;
-    //BattleModel model;
     BorderPane borderPane;
     Button saveButton;
     public viewSettings(Stage stage){
