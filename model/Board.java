@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import Player.Player;
 import javafx.event.EventHandler;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import ship.Ship;
+import Player.Computer;
 
 
 public class Board extends Parent {
@@ -80,7 +82,7 @@ public class Board extends Parent {
         return (Cell)((HBox)rows.getChildren().get(y)).getChildren().get(x);
     }
 
-    private Cell[] getNeighbors(int x, int y) {
+    public Cell[] getNeighbors(int x, int y) {
         Point2D[] points = new Point2D[] {
                 new Point2D(x - 1, y),
                 new Point2D(x + 1, y),
@@ -147,7 +149,7 @@ public class Board extends Parent {
     }
 
     private boolean isValidPoint(double x, double y) {
-        return x >= 0 && x < this.grid && y >= 0 && y < this.grid;
+        return x >= 0 && x < this.grid && y >= 0 && y < this.grid ;
     }
 
     public class Cell extends Rectangle {
@@ -167,9 +169,15 @@ public class Board extends Parent {
         }
 
         public boolean shoot(Player player) {
+            if (player.getClass() == Computer.class){
+                try{ TimeUnit.MILLISECONDS.sleep(100000000);}
+                catch(InterruptedException ignored){}
+
+
+            }
             wasShot = true;
             setFill(Color.BLACK);
-
+            System.out.println("shot: "+ this.x + " " + this.y);
             if (ship != null) {
                 ship.hit();
                 setFill(Color.RED);
