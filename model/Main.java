@@ -263,12 +263,12 @@ public class Main extends Application {
         running = true;
     }
 
-    public int getHumanAccuracy(){
-        return this.human.getHits()/this.human.getTotalShots() * 100;
+    public double getHumanAccuracy(){
+        return (double)this.human.getHits()/this.human.getTotalShots() * 100;
     }
 
-    public int getComputerAccuracy(){
-        return this.computer.getHits()/this.computer.getTotalShots() * 100;
+    public double getComputerAccuracy(){
+        return (double)this.computer.getHits()/this.computer.getTotalShots() * 100;
     }
 
     public String getGameMode(){
