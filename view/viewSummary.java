@@ -143,22 +143,22 @@ public class viewSummary {
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 10, 0, 10));
 
-        Text title1 = new Text("Game Mode: "); //  wanna add + getGameMode()
+        Text title1 = new Text("Game Mode: " + main.getGameMode()); //  wanna add + getGameMode()
         title1.setFill(Color.ORANGE);
         title1.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         grid.add(title1, 1, 5);
 
-        Text title2 = new Text("Winner: "); // want to add which player won
+        Text title2 = new Text("Winner: " + main.getWinner()); // want to add which player won
         title2.setFill(Color.ORANGE);
         title2.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         grid.add(title2, 1, 6);
 
         // Subtitle in columns 2-3, row 2
-        Text small = new Text("Player's Accuracy For The Entire Game: "); //+ calculatePaccuracy
+        Text small = new Text("Player's Accuracy For The Entire Game: " + main.getHumanAccuracy()); //+ calculatePaccuracy
         small.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         small.setFill(Color.ORANGE);
         grid.add(small, 1, 7);
-        Text small2 = new Text("Computer's Accuracy For The Entire Game: "); //+ calculateCaccuracy
+        Text small2 = new Text("Computer's Accuracy For The Entire Game: " + main.getComputerAccuracy()); //+ calculateCaccuracy
         small2.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         small2.setFill(Color.ORANGE);
         grid.add(small2, 1, 8);
