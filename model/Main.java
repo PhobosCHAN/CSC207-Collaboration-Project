@@ -5,7 +5,10 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import javafx.geometry.Insets;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import view.viewSummary;
 
 import view.viewStart;
@@ -46,28 +49,10 @@ public class Main extends Application {
 
     private boolean enemyTurn = false;
 
-    private String winner;
-
     Player human;
     Player computer;
 
     private Random random = new Random();
-
-    public model.Board getEnemyBoard(){
-        return this.enemyBoard;
-    }
-
-    public model.Board getPlayerBoardBoard(){
-        return this.playerBoard;
-    }
-
-    public void setEnemyBoard(model.Board board){
-        this.enemyBoard = board;
-    }
-
-    public void setPlayerBoard(model.Board board){
-        this.playerBoard = board;
-    }
 
     public void populatePlayerShips(int choice){
         this.choice = choice;
@@ -118,8 +103,8 @@ public class Main extends Application {
     public Parent createContent(int choice, Stage stage) {
         this.stage = stage;
         this.populatePlayerShips(choice);
-        human = new Player("human", shipsHuman, this.choice == 7);
-        computer = new Player("computer", shipsComputer, this.choice == 7);
+        human = new Player(shipsHuman, this.choice == 7);
+        computer = new Player(shipsComputer, this.choice == 7);
         BorderPane root = new BorderPane();
         root.setPrefSize(800, 700);
         //add a new node here to show ships hp
@@ -131,13 +116,11 @@ public class Main extends Application {
             Cell cell = (Cell) event.getSource();
             if (cell.wasShot)
                 return;
-            this.human.setTotalShots();
+
             enemyTurn = !cell.shoot(computer);
-            if(!enemyTurn)
-               this.human.setHits();
-            if (computer.getHp() == 0) {
+
+            if (enemyBoard.ships == 0) {
                 viewSummary summary = new viewSummary(this.stage, 1, this, this.choice);
-                winner = "Human";
             }
             if (enemyTurn){
                 try {
@@ -165,46 +148,42 @@ public class Main extends Application {
                 currentShipIndex++;
             }
         });
-        if (choice == 10){
-            Text text = new Text();
-            text.setText("    0         1         2         3         4         5         6         7        8        9");
-            Text text2 = new Text();
-            text2.setText("    0         1         2         3         4         5         6         7        8        9");
-            VBox vbox = new VBox(10, text, enemyBoard, text2, playerBoard);
-            VBox part1 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                    new Text("6"), new Text("7"), new Text("8"), new Text("9"));
-            VBox part2 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                    new Text("6"), new Text("7"), new Text("8"), new Text("9"));
-            VBox spacing = new VBox(5, new Text(" "), new Text(" "));
-            VBox vbox2 = new VBox(10, part1, spacing, part2);
-            vbox2.setPadding(new Insets(35, 0, 1, 0));
-            HBox hbox = new HBox(10, vbox2, vbox);
-            hbox.setPadding(new Insets(5, 2, 5, 1));
-            hbox.setAlignment(Pos.CENTER);
-            hbox.setAlignment(Pos.CENTER);
-            root.setCenter(hbox);
-        }
-        else if (choice == 7){
-            Text text = new Text();
-            text.setText("    0         1         2         3         4         5         6");
-            Text text2 = new Text();
-            text2.setText("    0         1         2         3         4         5         6");
-            VBox vbox = new VBox(10, text, enemyBoard, text2, playerBoard);
-            VBox part1 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                    new Text("6"));
-            VBox part2 = new VBox(15, new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                    new Text("6"));
-            VBox spacing = new VBox(5, new Text(" "), new Text(" "));
-            VBox vbox2 = new VBox(10, part1, spacing, part2);
-            vbox2.setPadding(new Insets(35, 0, 1, 0));
-            HBox hbox = new HBox(10, vbox2, vbox);
-            hbox.setPadding(new Insets(5, 2, 5, 1));
-            hbox.setAlignment(Pos.CENTER);
-            root.setCenter(hbox);
-        }
+        root.setCenter(layout());
         return root;
     }
-
+    public GridPane layout(){
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(0, 10, 0, 10));
+        Text text = null;
+        Text text2 = null;
+        if (choice == 10){
+            text = new Text("    0         1         2         3         4         5         6         7        8        9");
+            text2 = new Text("    0         1         2         3         4         5         6         7        8        9");
+        } else if (choice == 7) {
+            text = new Text("    0         1         2         3         4         5         6");
+            text2 = new Text("    0         1         2         3         4         5         6");
+        }
+        VBox vbox = new VBox(10, text, enemyBoard, text2, playerBoard);
+        VBox part1 = null;
+        VBox part2 = null;
+        if (choice == 10){
+            part1 = new VBox(15, new Text("  "), new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
+                    new Text("6"), new Text("7"), new Text("8"), new Text("9"));
+            part2 = new VBox(15, new Text("  "), new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
+                    new Text("6"), new Text("7"), new Text("8"), new Text("9"));
+        } else if (choice == 7) {
+            part1 = new VBox(15, new Text("  "), new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
+                    new Text("6"));
+            part2 = new VBox(15, new Text("  "), new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
+                    new Text("6"));
+        }
+        VBox vbox2 = new VBox(5, part1, new Text(""), part2);
+        HBox hbox = new HBox(10, vbox2, vbox);
+        grid.add(hbox, 15, 0);
+        return grid;
+    }
     private void enemyMove() throws InterruptedException {
         while (enemyTurn) {
             if (!playerBoard.getCell(lastX, lastY).getFill().equals(Color.RED)){
@@ -214,15 +193,12 @@ public class Main extends Application {
                     continue;}
                 else if( val[0] == 1){
                     lastX = val[1];
-                    lastY = val[2];
-                    computer.setHits();
-                }
+                    lastY = val[2];}
                 else{
                     lastX = val[1];
                     lastY = val[2];
                     enemyTurn = false;
                 }
-                this.computer.setTotalShots();
             }
             else{
                 StrategyHit strategy = new StrategyHit();
@@ -231,15 +207,12 @@ public class Main extends Application {
                     continue;}
                 else if( val[0] == 1){
                     lastX = val[1];
-                    lastY = val[2];
-                    computer.setHits();
-                }
+                    lastY = val[2];}
                 else{
                     lastX = val[1];
                     lastY = val[2];
                     enemyTurn = false;
                 }
-                this.computer.setTotalShots();
             }
             if (human.getHp() == 0) {
                 viewSummary summary = new viewSummary(this.stage, 2, this, this.choice); // Let 1 represent Player and 2 represent Computer
@@ -263,24 +236,20 @@ public class Main extends Application {
         running = true;
     }
 
-    public double getHumanAccuracy(){
-        return (double)this.human.getHits()/this.human.getTotalShots() * 100;
+    public model.Board getEnemyBoard(){
+        return this.enemyBoard;
     }
 
-    public double getComputerAccuracy(){
-        return (double)this.computer.getHits()/this.computer.getTotalShots() * 100;
+    public model.Board getPlayerBoardBoard(){
+        return this.playerBoard;
     }
 
-    public String getGameMode(){
-        if(this.choice == 10)
-            return "Normal Mode";
-        return "Fast Mode";
+    public void setEnemyBoard(model.Board board){
+        this.enemyBoard = board;
     }
 
-    public String getWinner(){
-        if(winner.equals("Human"))
-            return "Human";
-        return "Computer";
+    public void setPlayerBoard(model.Board board){
+        this.playerBoard = board;
     }
 
     @Override
