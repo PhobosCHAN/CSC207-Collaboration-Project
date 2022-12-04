@@ -2,6 +2,7 @@ package model;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
@@ -24,6 +25,8 @@ import javafx.stage.Stage;
 import model.Board.Cell;
 import ship.Ship;
 import ship.ShipFactory;
+
+import static java.lang.Thread.sleep;
 
 public class Main extends Application {
 
@@ -97,8 +100,8 @@ public class Main extends Application {
     public Parent createContent(int choice, Stage stage) {
         this.stage = stage;
         this.populatePlayerShips(choice);
-        human = new Player(shipsHuman, false);
-        computer = new Player(shipsComputer, false);
+        human = new Player(shipsHuman, this.choice == 7);
+        computer = new Player(shipsComputer, this.choice == 7);
         BorderPane root = new BorderPane();
         root.setPrefSize(800, 700);
         //add a new node here to show ships hp
@@ -117,7 +120,11 @@ public class Main extends Application {
                 viewSummary summary = new viewSummary(this.stage, 1, this, this.choice);
             }
             if (enemyTurn){
-                enemyMove();}
+                try {
+                    enemyMove();
+                } catch (InterruptedException ignored) {
+                }
+            }
         });
         playerBoard = new Board(false, choice, event -> {
             if (running)
@@ -178,32 +185,39 @@ public class Main extends Application {
         return root;
     }
 
-    private void enemyMove() {
+    private void enemyMove() throws InterruptedException {
         while (enemyTurn) {
-
             if (!playerBoard.getCell(lastX, lastY).getFill().equals(Color.RED)){
                 StrategyMiss strategy = new StrategyMiss();
                 int[] val = strategy.execute(human, playerBoard, lastX, lastY);
-                if(val[0] == 0)
+                if(val[0] == 0){
+                    continue;}
+                else if( val[0] == 1){
+                    lastX = val[1];
+                    lastY = val[2];}
+                else{
+                    lastX = val[1];
+                    lastY = val[2];
                     enemyTurn = false;
-                else
-                    enemyTurn = true;
-                lastX = val[1];
-                lastY = val[2];
-                System.out.println(lastX + " " + lastY);
+                }
             }
             else{
                 StrategyHit strategy = new StrategyHit();
                 int[] val = strategy.execute(human, playerBoard, lastX, lastY);
-                if(val[0] == 0)
-                    continue;
-                lastX = val[1];
-                lastY = val[2];
+                if(val[0] == 0){
+                    continue;}
+                else if( val[0] == 1){
+                    lastX = val[1];
+                    lastY = val[2];}
+                else{
+                    lastX = val[1];
+                    lastY = val[2];
+                    enemyTurn = false;
+                }
             }
-            if (playerBoard.ships == 0) {
+            if (human.getHp() == 0) {
                 viewSummary summary = new viewSummary(this.stage, 2, this, this.choice); // Let 1 represent Player and 2 represent Computer
             }
-
         }
     }
 
@@ -220,7 +234,6 @@ public class Main extends Application {
                 ComputerCurrentIndex++;
             }
         }
-
         running = true;
     }
 
