@@ -275,9 +275,9 @@ public class Main extends Application {
     }
 
     public String getWinner(){
-        if(winner.equals("Human"))
-            return "Human";
-        return "Computer";
+        if(winner == null)
+            return "Computer";
+        return "Human";
     }
 
     @Override
