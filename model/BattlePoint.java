@@ -5,7 +5,6 @@ import java.io.Serializable;
 /** A representation of a point of a ship.
  * A Ship is defined by a collection of BattlePoints
  *
- * Based on the Tetris assignment in the Nifty Assignments Database, authored by Nick Parlante
  */
 
 public class BattlePoint implements Serializable, Comparable<BattlePoint>{
