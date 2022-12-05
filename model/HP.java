@@ -10,14 +10,13 @@ public class HP {
     /**
      * Starting player HP for the fast mode of Battle Ship where there are ships of sizes: 4, 4, 3
      */
-    public int hp_small = 10;
+    public int hp_small = 11;
     private HP() {}
 
     public static synchronized HP getInstance(){
         if(instance == null){
             instance = new HP();
         }
-
         return instance;
     }
 }
