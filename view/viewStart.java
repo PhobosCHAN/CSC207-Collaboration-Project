@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import model.Main;
+import view.viewGame;
 
 /**
  * Battleship game UI
@@ -30,6 +31,7 @@ import model.Main;
  *
  */
 public class viewStart {
+    viewGame game;
     Main main;
     Stage stage;
     BorderPane borderPane;
@@ -42,6 +44,7 @@ public class viewStart {
     private double height;
 
     public viewStart(Stage stage, Main main){
+        this.game = new viewGame(stage, main);
         this.main = main;
         this.stage = stage;
         this.choice = 10;
@@ -147,6 +150,14 @@ public class viewStart {
             this.stage.setScene(scene);
             this.stage.setResizable(false);
             this.stage.show();
+            if (this.choice == 10){
+                game.instructions1(5);
+                this.stage.requestFocus();
+            }
+            else if (this.choice == 7){
+                game.instructions1(3);
+                this.stage.requestFocus();
+            }
         });
 
         loadButton.setOnAction(e ->{

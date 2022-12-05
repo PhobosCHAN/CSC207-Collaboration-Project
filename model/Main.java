@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -26,15 +28,16 @@ import javafx.stage.Stage;
 import model.Board.Cell;
 import ship.Ship;
 import ship.ShipFactory;
+import view.viewGame;
 
 import static java.lang.Thread.sleep;
 
 public class Main extends Application {
 
+    private view.viewGame game;
     Stage stage;
     private boolean running = false;
     private model.Board enemyBoard, playerBoard;
-
     private Ship[] shipsHuman;
     private Ship[] shipsComputer;
 
@@ -53,6 +56,10 @@ public class Main extends Application {
     Player computer;
 
     private Random random = new Random();
+
+    public Ship[] getShipsHuman(){
+        return this.shipsHuman;
+    }
 
     public model.Board getEnemyBoard(){
         return this.enemyBoard;
@@ -117,18 +124,18 @@ public class Main extends Application {
     }
 
     public Parent createContent(int choice, Stage stage) {
+        this.game = new viewGame(stage, this);
         this.stage = stage;
         this.populatePlayerShips(choice);
         human = new Player("human", shipsHuman, this.choice == 7);
         computer = new Player("computer", shipsComputer, this.choice == 7);
         BorderPane root = new BorderPane();
         root.setPrefSize(800, 700);
-        //add a new node here to show ships hp
-        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
-        enemyBoard = new Board(true, choice, event -> {
+        root.setLeft(game.leftButtons(this.choice));
+        root.setRight(game.rightInteractive(this.choice));
+        enemyBoard = new Board(this.game, true, choice, event -> {
             if (!running)
                 return;
-
             Cell cell = (Cell) event.getSource();
             if (cell.wasShot)
                 return;
@@ -147,7 +154,7 @@ public class Main extends Application {
                 }
             }
         });
-        playerBoard = new Board(false, choice, event -> {
+        playerBoard = new Board(this.game,false, choice, event -> {
             if (running)
                 return;
 
@@ -157,49 +164,20 @@ public class Main extends Application {
             shipsHuman[currentShipIndex].setBody(vert, cell.x, cell.y);
             if (playerBoard.placeShip(shipsHuman[currentShipIndex], cell.x, cell.y)) {
                 if ((currentShipIndex + 1) == 5 & choice == 10) {
+                    game.instructions2();
                     startGame();
                 }
-                // Configured: For the 3v3 game mode.
+                // Configured: For the 3v3 game mode. Ships used = 4, 3, 3
                 else if ((currentShipIndex + 1) == 3 & choice == 7){
+                    game.instructions2();
                     startGame();
                 }
                 currentShipIndex++;
             }
-        });root.setCenter(layout());
+        });
+        root.setCenter(game.layout(choice));
+        //root.setBackground();
         return root;
-    }
-    public GridPane layout(){
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(0, 10, 0, 10));
-        Text text = null;
-        Text text2 = null;
-        if (choice == 10){
-            text = new Text("    0         1         2         3         4         5         6         7        8        9");
-            text2 = new Text("    0         1         2         3         4         5         6         7        8        9");
-        } else if (choice == 7) {
-            text = new Text("    0         1         2         3         4         5         6");
-            text2 = new Text("    0         1         2         3         4         5         6");
-        }
-        VBox vbox = new VBox(10, text, enemyBoard, text2, playerBoard);
-        VBox part1 = null;
-        VBox part2 = null;
-        if (choice == 10){
-            part1 = new VBox(15, new Text("  "), new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                    new Text("6"), new Text("7"), new Text("8"), new Text("9"));
-            part2 = new VBox(15, new Text("  "), new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                    new Text("6"), new Text("7"), new Text("8"), new Text("9"));
-        } else if (choice == 7) {
-            part1 = new VBox(15, new Text("  "), new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                    new Text("6"));
-            part2 = new VBox(15, new Text("  "), new Text("0"), new Text("1"),new Text("2"),new Text("3"),new Text("4"),new Text("5"),
-                    new Text("6"));
-        }
-        VBox vbox2 = new VBox(5, part1, new Text(""), part2);
-        HBox hbox = new HBox(10, vbox2, vbox);
-        grid.add(hbox, 15, 0);
-        return grid;
     }
 
     private void enemyMove() throws InterruptedException {
@@ -279,6 +257,7 @@ public class Main extends Application {
             return "Human";
         return "Computer";
     }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
