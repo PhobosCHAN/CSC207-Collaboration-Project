@@ -154,11 +154,11 @@ public class viewSummary {
         grid.add(title2, 1, 6);
 
         // Subtitle in columns 2-3, row 2
-        Text small = new Text("Player's Accuracy For The Entire Game: " + main.getHumanAccuracy()); //+ calculatePaccuracy
+        Text small = new Text("Player's Accuracy For The Entire Game: " + main.getHumanAccuracy() + "%") ; //+ calculatePaccuracy
         small.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         small.setFill(Color.ORANGE);
         grid.add(small, 1, 7);
-        Text small2 = new Text("Computer's Accuracy For The Entire Game: " + main.getComputerAccuracy()); //+ calculateCaccuracy
+        Text small2 = new Text("Computer's Accuracy For The Entire Game: " + main.getComputerAccuracy() + "%"); //+ calculateCaccuracy
         small2.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         small2.setFill(Color.ORANGE);
         grid.add(small2, 1, 8);
