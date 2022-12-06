@@ -164,6 +164,7 @@ public class viewStart {
 
         loadButton.setOnAction(e ->{
             viewLoad load =  new viewLoad(this.stage);
+
         });
 
         hbox.getChildren().addAll(gameStartButton, loadButton);

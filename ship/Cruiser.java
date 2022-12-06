@@ -26,6 +26,9 @@ public class Cruiser implements Ship {
         this.health = 4;
         this.vertical = vertical;
     }
+    public Cruiser(){
+        this.health = 4;
+    }
 
     /**
      * Getter for ship HP
