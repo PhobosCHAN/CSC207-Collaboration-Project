@@ -197,7 +197,7 @@ public class Main extends Application {
             else
                 this.soundProducer(12); //Miss sound
             if (computer.getHp() == 0) {
-                viewSummary summary = new viewSummary(this.stage, 1, this, this.choice);
+                viewSummary summary = new viewSummary(this.stage, 1, this, this.choice, this.choice2);
                 winner = "Human";
             }
             if (enemyTurn){
@@ -297,7 +297,7 @@ public class Main extends Application {
                 this.computer.setTotalShots();
             }
             if (human.getHp() == 0) {
-                viewSummary summary = new viewSummary(this.stage, 2, this, this.choice); // Let 1 represent Player and 2 represent Computer
+                viewSummary summary = new viewSummary(this.stage, 2, this, this.choice, this.choice2); // Let 1 represent Player and 2 represent Computer
             }
         }
     }
@@ -355,10 +355,6 @@ public class Main extends Application {
         if(winner == null)
             return "Computer";
         return "Human";
-    }
-
-    public int getAccesibiltyChoice(){
-        return this.choice2;
     }
 
     /**
