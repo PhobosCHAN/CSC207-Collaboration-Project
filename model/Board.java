@@ -266,7 +266,6 @@ public class Board extends Parent {
             }
             this.board.count++;
             wasShot = true;
-            System.out.println("shot: "+ this.x + " " + this.y);
             if (ship != null) {
                 ship.hit();
                 setFill(Color.RED);
@@ -282,15 +281,19 @@ public class Board extends Parent {
         }
     }
 
-    public void soundProducer(int num){
-        String path = "num"+ num +".mp3";
+    public void soundProducer(int x, int y){
+        String path1 = "num"+ x +".mp3";
+        String path2 = "num"+ y +".mp3";
 
-        Media buzzer = new Media(getClass().getResource(path).toExternalForm());
+        Media half = new Media(getClass().getResource(path1).toExternalForm());
+        Media half2 = new Media(getClass().getResource(path2).toExternalForm());
 
         //Instantiating MediaPlayer class
-        MediaPlayer mediaPlayer = new MediaPlayer(buzzer);
+        MediaPlayer mediaPlayer = new MediaPlayer(half);
+        MediaPlayer mediaPlayer2 = new MediaPlayer(half2);
 
         //by setting this property to true, the audio will be played
         mediaPlayer.setAutoPlay(true);
+        mediaPlayer2.setAutoPlay(true);
     }
 }
