@@ -26,6 +26,9 @@ import Player.Computer;
 
 import view.viewGame;
 
+/**
+ * Represents a Board class for BattleShip
+ */
 public class Board extends Parent {
     viewGame game;
     private VBox rows = new VBox();
@@ -34,6 +37,13 @@ public class Board extends Parent {
 
     public int grid;
 
+    /**
+     * A constructor for the board class
+     * @param game an object of viewGame
+     * @param enemy is true if the board refers to an enemy's board
+     * @param choice is 10 if the game is in normal mode and 7 if the game is in fast mode
+     * @param handler an object for the event handler
+     */
     public Board(viewGame game,boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
         this.game = game;
         if (choice == 10){
@@ -55,6 +65,15 @@ public class Board extends Parent {
         getChildren().add(rows);
     }
 
+    /**
+     * A function to place a ship on the board. Returns true if the ship is successfully placed
+     * but false if there is already a ship int the desired position on the board or if the
+     * position is outside the board.
+     * @param ship An object representing the ship to be placed
+     * @param x the x coordinate for the desired position
+     * @param y the y coordinate for the desired position
+     * @return true if the placement is successful and false otherwise
+     */
     public boolean placeShip(Ship ship, int x, int y) {
         if (canPlaceShip(ship, x, y)) {
             int length = ship.getBody().length;
@@ -84,10 +103,22 @@ public class Board extends Parent {
         return false;
     }
 
+    /**
+     * Getter for the cell at position x,y
+     * @param x x coordinate of the cell on the board
+     * @param y y coordinate for thr cell on the board
+     * @return a cell an position x,y
+     */
     public Cell getCell(int x, int y) {
         return (Cell)((HBox)rows.getChildren().get(y)).getChildren().get(x);
     }
 
+    /**
+     * A getter for the neighbours of the cell
+     * @param x x coordinate of the cell
+     * @param y y coordinate of the cell
+     * @return a list of cells that are adjacent to the cell at given x and y
+     */
     public Cell[] getNeighbors(int x, int y) {
         Point2D[] points = new Point2D[] {
                 new Point2D(x - 1, y),
@@ -107,6 +138,13 @@ public class Board extends Parent {
         return neighbors.toArray(new Cell[0]);
     }
 
+    /**
+     * A helper function for placeShip. Returns true is the ship can be placed at position x,y on the board
+     * @param ship an object representing a ship
+     * @param x the x coordinate for the desired position
+     * @param y the y coordinate for the desired position
+     * @return true if the placement can be successful and false otherwise
+     */
     private boolean canPlaceShip(Ship ship, int x, int y) {
         int length = ship.getBody().length;
 
@@ -150,21 +188,41 @@ public class Board extends Parent {
         return true;
     }
 
+    /**
+     * Checks if a given point is valid on the board or not
+     * @param point an object representing a point on the board
+     * @return true if the point is valid and false otherwise
+     */
     private boolean isValidPoint(Point2D point) {
         return isValidPoint(point.getX(), point.getY());
     }
 
+    /**
+     * A helper function for the above function that checks if the given x and y are within the board
+     * @param x x coordinate of the point
+     * @param y y coordinate of the point
+     * @return true if x and y are on the board and false otherwise
+     */
     private boolean isValidPoint(double x, double y) {
         return x >= 0 && x < this.grid && y >= 0 && y < this.grid ;
     }
 
     public class Cell extends Rectangle {
+        /**
+         * A class representing a cell. A subclass of the Rectangle class in javafx.
+         */
         public int x, y;
         public Ship ship = null;
         public boolean wasShot = false;
 
         private Board board;
 
+        /**
+         * A constructor for a cell
+         * @param x x coordinate of the cell
+         * @param y y coordinate of the cell
+         * @param board the board which contains the cell
+         */
         public Cell(int x, int y, Board board) {
             super(30, 30);
             this.x = x;
@@ -173,6 +231,12 @@ public class Board extends Parent {
             setFill(Color.LIGHTBLUE);
             setStroke(Color.BLUE);
         }
+
+        /**
+         * A function that allows player to shoot the cell
+         * @param player An object of Player class representing the player that is shooting the cell
+         * @return true if there was a ship present on that cell and false otherwise
+         */
         public boolean shoot(Player player) {
             if (player.getClass() == Computer.class){
                 try{ TimeUnit.MILLISECONDS.sleep(100000000);}

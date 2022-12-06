@@ -34,7 +34,12 @@ import view.viewGame;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * A BattleShip Application, in JavaFX
+ *
+ */
 public class Main extends Application {
+
 
     private view.viewGame game;
     Stage stage;
@@ -59,26 +64,50 @@ public class Main extends Application {
 
     private Random random = new Random();
 
+    /**
+     * A getter for the list of ships belonging to the human player.
+     * @return A list of ships that are on the human's board
+     */
     public Ship[] getShipsHuman(){
         return this.shipsHuman;
     }
 
+    /**
+     * A getter for the list of ships belonging to the computer player.
+     * @return A list of ships that are on the computer's board
+     */
     public model.Board getEnemyBoard(){
         return this.enemyBoard;
     }
 
+    /**
+     * Getter for the board for human
+     * @return a board object representing the human's board
+     */
     public model.Board getPlayerBoardBoard(){
         return this.playerBoard;
     }
 
+    /**
+     * Setter for the board for computer
+     * @param board The board that the computer's board should represent
+     */
     public void setEnemyBoard(model.Board board){
         this.enemyBoard = board;
     }
 
+    /**
+     * Setter for the board for human
+     * @param board The board that the human's board should represent
+     */
     public void setPlayerBoard(model.Board board){
         this.playerBoard = board;
     }
 
+    /**
+     * A function to create the player ships and assign them to each player.
+     * @param choice is 10 if the game is being played in normal mode and 7 if the game is being played in fast mode
+     */
     public void populatePlayerShips(int choice){
         this.choice = choice;
         currentShipIndex = 0;
@@ -125,6 +154,14 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Creates the board in the UI and deals with the placement on the ship by the human and computer and handles the
+     * user moves.
+     * Ends the game when either Player reach zero HP.
+     * @param choice is 10 if the game is being played in normal mode and 7 if the game is being played in fast mode
+     * @param stage an object for Stage for the javafx
+     * @return root: an object of the Parent class
+     */
     public Parent createContent(int choice, Stage stage) {
         this.game = new viewGame(stage, this);
         this.stage = stage;
@@ -182,6 +219,10 @@ public class Main extends Application {
         return root;
     }
 
+    /**
+     * Handles the computer moves and calls the StrategyHit or Miss depending on the previous move
+     * @throws InterruptedException if any
+     */
     private void enemyMove() throws InterruptedException {
         while (enemyTurn) {
             if (!playerBoard.getCell(lastX, lastY).getFill().equals(Color.RED)){
@@ -224,6 +265,9 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Start method.  Places the computer's ships at random positions on the computer's board.
+     */
     private void startGame() {
         // place enemy ships
         // Configured: For the 3v3 game mode. From < 5 to < shipsComputer.length
@@ -240,32 +284,57 @@ public class Main extends Application {
         running = true;
     }
 
+    /**
+     * Getter for the Human Player's Accuracy for hits
+     * @return a double value representing the human's accuracy for hits
+     */
     public double getHumanAccuracy(){
         return Double.parseDouble(new DecimalFormat("##.00").format((double)this.human.getHits()/this.human.getTotalShots() * 100));
     }
 
+    /**
+     * Getter for the Computer Player's Accuracy for hits
+     * @return a double value representing the computer's accuracy for hits
+     */
     public double getComputerAccuracy(){
         return Double.parseDouble(new DecimalFormat("##.00").format((double)this.computer.getHits()/this.computer.getTotalShots() * 100));
     }
 
+    /**
+     * Getter for the mode the game was played in
+     * @return
+     */
     public String getGameMode(){
         if(this.choice == 10)
             return "Normal Mode";
         return "Fast Mode";
     }
 
+    /**
+     * Getter for the winner of the game
+     * @return
+     */
     public String getWinner(){
         if(winner == null)
             return "Computer";
         return "Human";
     }
 
-
+    /**
+     * Start method.  Control of application flow is dictated by JavaFX framework
+     *
+     * @param primaryStage stage upon which to load GUI elements
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         viewStart start = new viewStart(primaryStage, this);
     }
 
+    /**
+     * Main method
+     *
+     * @param args argument, if any
+     */
     public static void main(String[] args) {
         launch(args);
     }
