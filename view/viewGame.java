@@ -94,11 +94,16 @@ public class viewGame{
         Text title3 = new Text("Means MISS");
         title3.setFill(Color.BLACK);
         title3.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-        Image image2 = new Image("hit.png");
-        Text title4 = new Text("Means HIT (You are allowed to shoot again until you miss)");
+        Image image2 = new Image("recent.png");
+        Text title4 = new Text("Means the most recent move was a MISS");
         title4.setFill(Color.BLACK);
         title4.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-        VBox vbox = new VBox(10, title1, title2, new ImageView(image), title3, new ImageView(image2), title4);
+        Image image3 = new Image("hit.png");
+        Text title5 = new Text("Means HIT (You are allowed to shoot again until you miss)");
+        title5.setFill(Color.BLACK);
+        title5.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        VBox vbox = new VBox(10, title1, title2, new ImageView(image), title3, new ImageView(image2),
+                title4, new ImageView(image3), title5);
         vbox.setAlignment(Pos.CENTER);
         return vbox;
     }
