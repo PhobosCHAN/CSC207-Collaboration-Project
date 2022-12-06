@@ -17,6 +17,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -30,12 +32,16 @@ import view.viewGame;
  * Represents a Board class for BattleShip
  */
 public class Board extends Parent {
+    public int count;
     viewGame game;
     private VBox rows = new VBox();
     private boolean enemy = false;
     public int ships = 5;
 
     public int grid;
+    public int lastX;
+    public int lastY;
+    public Cell prevCell;
 
     /**
      * A constructor for the board class
@@ -46,6 +52,7 @@ public class Board extends Parent {
      */
     public Board(viewGame game,boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
         this.game = game;
+        this.count = 0;
         if (choice == 10){
             this.grid = 10;
         }
@@ -225,6 +232,7 @@ public class Board extends Parent {
          */
         public Cell(int x, int y, Board board) {
             super(30, 30);
+
             this.x = x;
             this.y = y;
             this.board = board;
@@ -242,8 +250,22 @@ public class Board extends Parent {
                 try{ TimeUnit.MILLISECONDS.sleep(100000000);}
                 catch(InterruptedException ignored){}
             }
+
+            if(this.board.count!=0) {
+                if(prevCell.getFill().equals(Color.ORANGE))
+                    prevCell.setFill(Color.BLACK);
+                this.board.prevCell = this;
+                this.board.lastX = x;
+                this.board.lastY = y;
+            }
+            setFill(Color.ORANGE);
+            if(this.board.count == 0){
+                this.board.prevCell = this;
+                this.board.lastX = x;
+                this.board.lastY = y;
+            }
+            this.board.count++;
             wasShot = true;
-            setFill(Color.BLACK);
             System.out.println("shot: "+ this.x + " " + this.y);
             if (ship != null) {
                 ship.hit();
@@ -258,5 +280,17 @@ public class Board extends Parent {
 
             return false;
         }
+    }
+
+    public void soundProducer(int num){
+        String path = "num"+ num +".mp3";
+
+        Media buzzer = new Media(getClass().getResource(path).toExternalForm());
+
+        //Instantiating MediaPlayer class
+        MediaPlayer mediaPlayer = new MediaPlayer(buzzer);
+
+        //by setting this property to true, the audio will be played
+        mediaPlayer.setAutoPlay(true);
     }
 }
