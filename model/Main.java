@@ -5,17 +5,17 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.EventObject;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import view.viewSummary;
 
 import view.viewStart;
@@ -183,11 +183,17 @@ public class Main extends Application {
             Cell cell = (Cell) event.getSource();
             if (cell.wasShot)
                 return;
+            //this.soundProducer(cell.x);
+            //this.soundProducer(10);
+            //this.soundProducer(cell.y);
             this.human.setTotalShots();
             enemyTurn = !cell.shoot(computer);
-            soundProducer(1, 2);
-            if(!enemyTurn)
+            if(!enemyTurn) {
                 this.human.setHits();
+                this.soundProducer(11);
+            }
+            else
+                this.soundProducer(12);
             if (computer.getHp() == 0) {
                 viewSummary summary = new viewSummary(this.stage, 1, this, this.choice);
                 winner = "Human";
@@ -224,22 +230,27 @@ public class Main extends Application {
         //root.setBackground();
         return root;
     }
-    public void soundProducer(int x, int y) {
-        Media media = null;
-        try {
-            media = new Media(getClass().getResource("/Sounds/num0.mp3").toURI().toString());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        new MediaPlayer(media).play();
-        System.out.println("Hello");
-        //Media m = new Media("file:/Users/brianzijiechan/Desktop/CSProject/Stack_Overload_Certified-CSC207/Sounds/num0.mp3");
-        //new MediaPlayer(m).play();
-        //String path1 = "num" + x + ".mp3";
-        //String path2 = "num" + y + ".mp3";
-        //by setting this property to true, the audio will be played
-        // mediaPlayer.play();
-        //mediaPlayer2.play();
+
+    public void soundProducer(int x) {
+        String n0 = "num0.wav";
+        String n1 = "num1.wav";
+        String n2 = "num2.wav";
+        String n3 = "num3.wav";
+        String n4 = "num4.wav";
+        String n5 = "num5.wav";
+        String n6 = "num6.wav";
+        String n7 = "num7.wav";
+        String n8 = "num8.wav";
+        String n9 = "num9.wav";
+        String n10 = "silence.wav";
+        String n11 = "hit.wav";
+        String n12 = "miss.wav";
+        String[] audios = {n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12};
+        //Change this
+        String bip = "/Users/aryamansuri/Desktop/CSProject/Stack_Overload_Certified-CSC207/Sounds/";
+        Media media = new Media(new File(bip.concat(audios[x])).toURI().toString());
+        MediaPlayer mediaplayer = new MediaPlayer(media);
+        mediaplayer.play();
     }
 
     /**

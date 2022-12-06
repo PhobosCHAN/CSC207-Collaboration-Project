@@ -281,20 +281,4 @@ public class Board extends Parent {
             return false;
         }
     }
-
-    public void soundProducer(int x, int y){
-        String path1 = "num"+ x +".mp3";
-        String path2 = "num"+ y +".mp3";
-
-        Media half = new Media(getClass().getResource(path1).toExternalForm());
-        Media half2 = new Media(getClass().getResource(path2).toExternalForm());
-
-        //Instantiating MediaPlayer class
-        MediaPlayer mediaPlayer = new MediaPlayer(half);
-        MediaPlayer mediaPlayer2 = new MediaPlayer(half2);
-
-        //by setting this property to true, the audio will be played
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer2.setAutoPlay(true);
-    }
 }
