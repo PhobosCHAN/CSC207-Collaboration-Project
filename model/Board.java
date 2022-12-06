@@ -9,25 +9,33 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Cell;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import ship.Ship;
 import Player.Computer;
 
+import view.viewGame;
 
 public class Board extends Parent {
+    viewGame game;
     private VBox rows = new VBox();
     private boolean enemy = false;
     public int ships = 5;
 
     public int grid;
 
-    public Board(boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
+    public Board(viewGame game,boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
+        this.game = game;
         if (choice == 10){
             this.grid = 10;
         }
@@ -71,10 +79,8 @@ public class Board extends Parent {
                     }
                 }
             }
-
             return true;
         }
-
         return false;
     }
 
@@ -167,13 +173,10 @@ public class Board extends Parent {
             setFill(Color.LIGHTBLUE);
             setStroke(Color.BLUE);
         }
-
         public boolean shoot(Player player) {
             if (player.getClass() == Computer.class){
                 try{ TimeUnit.MILLISECONDS.sleep(100000000);}
                 catch(InterruptedException ignored){}
-
-
             }
             wasShot = true;
             setFill(Color.BLACK);
@@ -182,6 +185,7 @@ public class Board extends Parent {
                 ship.hit();
                 setFill(Color.RED);
                 player.gotHit();
+                game.deductHp(wasShot, game.grid, grid);
                 if (!ship.isAlive()) {
                     board.ships--;
                 }
