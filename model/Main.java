@@ -1,8 +1,10 @@
 package model;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -29,31 +31,31 @@ import model.Board.Cell;
 import ship.Ship;
 import ship.ShipFactory;
 import view.viewGame;
+import view.viewLoad;
 
 import static java.lang.Thread.sleep;
 
 public class Main extends Application {
-
-    private view.viewGame game;
-    Stage stage;
-    private boolean running = false;
+    public view.viewGame game;
+    public Stage stage;
+    public boolean running = false;
     private model.Board enemyBoard, playerBoard;
-    private Ship[] shipsHuman;
-    private Ship[] shipsComputer;
+    public Ship[] shipsHuman;
+    public Ship[] shipsComputer;
 
     private int currentShipIndex;
     private int ComputerCurrentIndex;
 
     private int lastX, lastY;
 
-    private int choice;
+    public int choice;
 
-    private boolean enemyTurn = false;
+    public boolean enemyTurn = false;
 
-    private String winner;
+    public String winner;
 
-    Player human;
-    Player computer;
+    public Player human;
+    public Player computer;
 
     private Random random = new Random();
 
@@ -175,6 +177,87 @@ public class Main extends Application {
                 currentShipIndex++;
             }
         });
+        root.setCenter(game.layout(choice));
+        //root.setBackground();
+        return root;
+    }
+    public Parent createContent(Stage stage) {
+        this.game = new viewGame(stage, this);
+        this.stage = stage;
+        human = new Player("human", shipsHuman, this.choice == 7);
+        computer = new Player("computer", shipsComputer, this.choice == 7);
+        human.setShips(this.shipsHuman);
+        computer.setShips(this.shipsComputer);
+        BorderPane root = new BorderPane();
+        root.setPrefSize(800, 700);
+        root.setLeft(game.leftButtons(this.choice));
+        root.setRight(game.rightInteractive(this.choice));
+
+        enemyBoard = new Board(this.game, true, choice, event -> {
+            if (!running)
+                return;
+            Cell cell = (Cell) event.getSource();
+            if (cell.wasShot)
+                return;
+            this.human.setTotalShots();
+            enemyTurn = !cell.shoot(computer);
+            if(!enemyTurn)
+                this.human.setHits();
+            if (computer.getHp() == 0) {
+                viewSummary summary = new viewSummary(this.stage, 1, this, this.choice);
+                winner = "Human";
+            }
+            if (enemyTurn){
+                try {
+                    enemyMove();
+                } catch (InterruptedException ignored) {
+                }
+            }
+        });
+        playerBoard = new Board(this.game,false, choice, event -> {
+            if (running)
+                return;
+
+            Cell cell = (Cell) event.getSource();
+            boolean vert = event.getButton() == MouseButton.PRIMARY;
+            shipsHuman[currentShipIndex].setVertical(vert);
+            shipsHuman[currentShipIndex].setBody(vert, cell.x, cell.y);
+            if (playerBoard.placeShip(shipsHuman[currentShipIndex], cell.x, cell.y)) {
+                if ((currentShipIndex + 1) == 5 & choice == 10) {
+                    game.instructions2();
+                    startGame();
+                }
+                // Configured: For the 3v3 game mode. Ships used = 4, 3, 3
+                else if ((currentShipIndex + 1) == 3 & choice == 7){
+                    game.instructions2();
+                    startGame();
+                }
+                currentShipIndex++;
+            }
+        });
+        for (Ship i: shipsHuman){
+            playerBoard.placeShip(i,i.getBody()[0].getX(), i.getBody()[0].getY());
+        }
+        for (Ship i: shipsComputer){
+            enemyBoard.placeShip(i,i.getBody()[0].getX(), i.getBody()[0].getY());
+        }
+
+        String[] computershot = viewLoad.raw1[3].split(" ");
+        String[] humanshot = viewLoad.raw1[4].split(" ");
+        for (int i = 0; i < computershot.length; i++){
+            if (Objects.equals(computershot[i], "true")){
+                int x = i/choice;
+                int y = i%choice;
+                enemyBoard.getCell(x,y).shoot(computer);
+            }
+        }
+        for (int i = 0; i < humanshot.length; i++){
+            if (Objects.equals(humanshot[i], "true")){
+                int x = i/choice;
+                int y = i%choice;
+                playerBoard.getCell(x,y).shoot(human);
+            }
+        }
         root.setCenter(game.layout(choice));
         //root.setBackground();
         return root;

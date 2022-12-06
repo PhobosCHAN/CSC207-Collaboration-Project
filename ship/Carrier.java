@@ -11,6 +11,10 @@ public class Carrier implements Ship{
     public boolean vertical = true;
     private int health;
 
+    public Carrier(){
+        this.health = 5;
+    }
+
     public Carrier(BattlePoint[] body, boolean vertical){
         this.body = body;
         this.health = 5;
@@ -18,6 +22,7 @@ public class Carrier implements Ship{
     }
     public void setBody(boolean vert, int x, int y) {
         body = new BattlePoint[5];
+        this.vertical = vert;
         for(int i = 0; i < 5; i++){
             if(vert) {
                 BattlePoint battlePoint = new BattlePoint(x, y);
@@ -56,5 +61,6 @@ public class Carrier implements Ship{
     public boolean getVertical(){
         return this.vertical;
     }
+
 
 }

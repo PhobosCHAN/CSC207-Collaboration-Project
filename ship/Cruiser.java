@@ -9,6 +9,9 @@ public class Cruiser implements Ship {
     public boolean vertical = true;
 
     private int health;
+    public Cruiser(){
+        this.health = 4;
+    }
     public Cruiser(BattlePoint[] body, boolean vertical){
         this.body = body;
         this.health = 4;
@@ -36,6 +39,7 @@ public class Cruiser implements Ship {
     }
     public void setBody(boolean vert, int x, int y) {
         body = new BattlePoint[4];
+        this.vertical = vert;
         for(int i = 0; i < 4; i++){
             if(vert) {
                 BattlePoint battlePoint = new BattlePoint(x, y);

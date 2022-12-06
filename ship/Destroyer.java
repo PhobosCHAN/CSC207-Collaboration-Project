@@ -9,6 +9,10 @@ public class Destroyer implements Ship{
     public boolean vertical = true;
 
     private int health;
+
+    public Destroyer(){
+        this.health = 3;
+    }
     public Destroyer(BattlePoint[] body, boolean vertical){
         this.body = body;
         this.health = 3;
@@ -35,6 +39,7 @@ public class Destroyer implements Ship{
     }
     public void setBody(boolean vert, int x, int y) {
         body = new BattlePoint[3];
+        this.vertical = vert;
         for(int i = 0; i < 3; i++){
             if(vert) {
                 BattlePoint battlePoint = new BattlePoint(x, y);
@@ -48,6 +53,7 @@ public class Destroyer implements Ship{
             }
         }
     }
+
 
     @Override
     public void setVertical(boolean vert) {

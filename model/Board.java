@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -18,16 +19,18 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import ship.Ship;
 import Player.Computer;
+import view.viewGame;
 
 
-public class Board extends Parent {
+public class Board extends Parent{
     private VBox rows = new VBox();
     private boolean enemy = false;
     public int ships = 5;
 
     public int grid;
+    public viewGame game;
 
-    public Board(boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
+    public Board(viewGame game, boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
         if (choice == 10){
             this.grid = 10;
         }
@@ -40,6 +43,25 @@ public class Board extends Parent {
             for (int x = 0; x < this.grid; x++) {
                 Cell c = new Cell(x, y, this);
                 c.setOnMouseClicked(handler);
+                row.getChildren().add(c);
+            }
+            rows.getChildren().add(row);
+        }
+        getChildren().add(rows);
+    }
+
+    public Board(int choice, String shot){
+        if (choice == 10){
+            this.grid = 10;
+        }
+        else{
+            this.grid = 7;
+        }
+        this.enemy = enemy;
+        for (int y = 0; y < this.grid; y++) {
+            HBox row = new HBox();
+            for (int x = 0; x < this.grid; x++) {
+                Cell c = new Cell(x, y, this);
                 row.getChildren().add(c);
             }
             rows.getChildren().add(row);
@@ -169,12 +191,7 @@ public class Board extends Parent {
         }
 
         public boolean shoot(Player player) {
-            if (player.getClass() == Computer.class){
-                try{ TimeUnit.MILLISECONDS.sleep(100000000);}
-                catch(InterruptedException ignored){}
 
-
-            }
             wasShot = true;
             setFill(Color.BLACK);
             System.out.println("shot: "+ this.x + " " + this.y);
@@ -190,5 +207,17 @@ public class Board extends Parent {
 
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        String res = null;
+        for (int i = 0; i < grid; i++) {
+            for (int j = 0; j < grid; j++) {
+                res += getCell(i, j).wasShot;
+                res+= " ";
+            }
+        }
+        return res;
     }
 }
