@@ -1,6 +1,9 @@
 package model;
 
 import java.awt.*;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +14,8 @@ import java.util.EventObject;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import view.viewSummary;
 
 import view.viewStart;
@@ -180,6 +185,7 @@ public class Main extends Application {
                 return;
             this.human.setTotalShots();
             enemyTurn = !cell.shoot(computer);
+            soundProducer(1, 2);
             if(!enemyTurn)
                 this.human.setHits();
             if (computer.getHp() == 0) {
@@ -217,6 +223,23 @@ public class Main extends Application {
         root.setCenter(game.layout(choice));
         //root.setBackground();
         return root;
+    }
+    public void soundProducer(int x, int y) {
+        Media media = null;
+        try {
+            media = new Media(getClass().getResource("/Sounds/num0.mp3").toURI().toString());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        new MediaPlayer(media).play();
+        System.out.println("Hello");
+        //Media m = new Media("file:/Users/brianzijiechan/Desktop/CSProject/Stack_Overload_Certified-CSC207/Sounds/num0.mp3");
+        //new MediaPlayer(m).play();
+        //String path1 = "num" + x + ".mp3";
+        //String path2 = "num" + y + ".mp3";
+        //by setting this property to true, the audio will be played
+        // mediaPlayer.play();
+        //mediaPlayer2.play();
     }
 
     /**
