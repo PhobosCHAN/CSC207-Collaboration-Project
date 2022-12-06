@@ -46,12 +46,14 @@ public class viewSummary {
     Button closeButton, playAgainButton, proceedButton;
     private int choice;
     private int winner;
+    private int choice2;
 
-    public viewSummary(Stage stage, int winner, Main main, int choice){
+    public viewSummary(Stage stage, int winner, Main main, int choice, int choice2){
         this.stage = stage;
         this.winner = winner;
         this.main = main;
         this.choice = choice;
+        this.choice2 = choice2;
         initUI();
     }
 
@@ -185,7 +187,7 @@ public class viewSummary {
 
         playAgainButton.setOnAction(e ->{
             this.main = new Main();
-            Scene scene = new Scene(this.main.createContent(this.choice, this.stage));
+            Scene scene = new Scene(this.main.createContent(this.choice, this.choice2, this.stage));
             this.stage.setTitle("Playing Battleship");
             this.stage.setScene(scene);
             this.stage.setResizable(false);

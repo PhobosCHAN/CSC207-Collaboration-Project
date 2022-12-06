@@ -104,6 +104,7 @@ public class viewGame{
         title5.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         VBox vbox = new VBox(10, title1, title2, new ImageView(image), title3, new ImageView(image2),
                 title4, new ImageView(image3), title5);
+
         vbox.setAlignment(Pos.CENTER);
         return vbox;
     }
