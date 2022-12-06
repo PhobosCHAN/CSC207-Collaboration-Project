@@ -37,7 +37,8 @@ public class viewStart {
     BorderPane borderPane;
     Button settingsButton, gameStartButton, loadButton;
 
-    int choice; // Let 1 represent game mode (5v5) and 2 represent game mode (3v3)
+    int choice; // Let 10 represent game mode (5v5) and 7 represent game mode (3v3)
+    int choice2; // Let 1 represent voiceover being on and 2 represent voiceover being off
 
     private ListView<String> gameModes;
     private double width; //height and width of canvas
@@ -48,6 +49,7 @@ public class viewStart {
         this.main = main;
         this.stage = stage;
         this.choice = 10;
+        this.choice2 = 1;
         initUI();
     }
 
@@ -145,7 +147,7 @@ public class viewStart {
         loadButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         gameStartButton.setOnAction(e ->{
-            Scene scene = new Scene(main.createContent(this.choice, this.stage));
+            Scene scene = new Scene(main.createContent(this.choice, this.choice2, this.stage));
             this.stage.setTitle("Playing Battleship");
             this.stage.setScene(scene);
             this.stage.setResizable(false);
@@ -202,10 +204,10 @@ public class viewStart {
             int selectedChoice = accessibilityBox.getSelectionModel().getSelectedIndex();
             Object selectedOption = accessibilityBox.getSelectionModel().getSelectedItem();
             if (selectedChoice == 0){
-                this.choice = 10;
+                this.choice2 = 1;
             }
             else if(selectedChoice == 1){
-                this.choice = 7;
+                this.choice2 = 0;
             }
             System.out.println("Selection choice: [" + selectedChoice + "] " + selectedOption);
             System.out.println("   accessibilityBox.getValue(): " + accessibilityBox.getValue());

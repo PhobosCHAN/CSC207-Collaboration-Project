@@ -46,12 +46,14 @@ public class viewSummary {
     Button closeButton, playAgainButton, proceedButton;
     private int choice;
     private int winner;
+    private int choice2;
 
-    public viewSummary(Stage stage, int winner, Main main, int choice){
+    public viewSummary(Stage stage, int winner, Main main, int choice, int choice2){
         this.stage = stage;
         this.winner = winner;
         this.main = main;
         this.choice = choice;
+        this.choice2 = choice2;
         initUI();
     }
 
@@ -154,11 +156,11 @@ public class viewSummary {
         grid.add(title2, 1, 6);
 
         // Subtitle in columns 2-3, row 2
-        Text small = new Text("Player's Accuracy For The Entire Game: " + main.getHumanAccuracy()); //+ calculatePaccuracy
+        Text small = new Text("Player's Accuracy For The Entire Game: " + main.getHumanAccuracy() + "%") ; //+ calculatePaccuracy
         small.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         small.setFill(Color.ORANGE);
         grid.add(small, 1, 7);
-        Text small2 = new Text("Computer's Accuracy For The Entire Game: " + main.getComputerAccuracy()); //+ calculateCaccuracy
+        Text small2 = new Text("Computer's Accuracy For The Entire Game: " + main.getComputerAccuracy() + "%"); //+ calculateCaccuracy
         small2.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         small2.setFill(Color.ORANGE);
         grid.add(small2, 1, 8);
@@ -185,7 +187,7 @@ public class viewSummary {
 
         playAgainButton.setOnAction(e ->{
             this.main = new Main();
-            Scene scene = new Scene(this.main.createContent(this.choice, this.stage));
+            Scene scene = new Scene(this.main.createContent(this.choice, this.choice2, this.stage));
             this.stage.setTitle("Playing Battleship");
             this.stage.setScene(scene);
             this.stage.setResizable(false);

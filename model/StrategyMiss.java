@@ -6,6 +6,16 @@ import javafx.scene.paint.Color;
 import java.util.Random;
 
 public class StrategyMiss implements Strategy{
+
+    /**
+     * Implements the Strategy interface for when the previous computer move was a miss
+     * @param player an object of the player class that represents the computer
+     * @param board an object for the human's board
+     * @param x x coordinate of the last move
+     * @param y y coordinate of the last move
+     * @return an integer array whose 0th index tells us if this move has led to a hit or miss, 1st
+     * index tells us the x coordinate of the move and 2nd index tells us the yth coordinate of the move
+     */
     @Override
     public int[] execute(Player player, Board board, int x, int y) {
         int[] value = new int[3];
