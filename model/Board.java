@@ -18,16 +18,19 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import ship.Ship;
 import Player.Computer;
+import view.viewGame;
 
 
 public class Board extends Parent {
+
+    viewGame game;
     private VBox rows = new VBox();
     private boolean enemy = false;
     public int ships = 5;
 
     public int grid;
 
-    public Board(boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
+    public Board(viewGame game, boolean enemy, int choice, EventHandler<? super MouseEvent> handler) {
         if (choice == 10){
             this.grid = 10;
         }

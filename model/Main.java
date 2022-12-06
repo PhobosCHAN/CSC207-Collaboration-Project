@@ -1,10 +1,12 @@
 package model;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.EventObject;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
@@ -239,11 +241,11 @@ public class Main extends Application {
     }
 
     public double getHumanAccuracy(){
-        return Math.round((double)this.human.getHits()/this.human.getTotalShots() * 100);
+        return Double.parseDouble(new DecimalFormat("##.00").format((double)this.human.getHits()/this.human.getTotalShots() * 100));
     }
 
     public double getComputerAccuracy(){
-        return Math.round((double)this.computer.getHits()/this.computer.getTotalShots() * 100);
+        return Double.parseDouble(new DecimalFormat("##.00").format((double)this.computer.getHits()/this.computer.getTotalShots() * 100));
     }
 
     public String getGameMode(){
