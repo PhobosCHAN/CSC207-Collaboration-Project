@@ -184,16 +184,16 @@ public class Main extends Application {
             if (cell.wasShot)
                 return;
             //this.soundProducer(cell.x);
-            //this.soundProducer(10);
+            //this.soundProducer(10); //Silence
             //this.soundProducer(cell.y);
             this.human.setTotalShots();
             enemyTurn = !cell.shoot(computer);
             if(!enemyTurn) {
                 this.human.setHits();
-                this.soundProducer(11);
+                this.soundProducer(11); //Hit sound
             }
             else
-                this.soundProducer(12);
+                this.soundProducer(12); //Miss sound
             if (computer.getHp() == 0) {
                 viewSummary summary = new viewSummary(this.stage, 1, this, this.choice);
                 winner = "Human";
