@@ -190,7 +190,7 @@ public class viewGame{
             try {
                 final File file =  new File(dir, strDate);
                 FileWriter myWriter = new FileWriter(file);
-                myWriter.write(grid + main.computer.getShips() + main.human.getShips() + enemyboard.toString() + playerboard.toString());
+                myWriter.write(grid + main.computer.getShips() + main.human.getShips() + enemyboard.toString() + playerboard.toString() + "null" +main.choice2);
                 myWriter.close();
                 System.out.println("Successfully wrote to the file.");
             } catch (IOException ecep) {

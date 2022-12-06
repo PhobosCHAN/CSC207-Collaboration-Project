@@ -166,6 +166,7 @@ public class viewLoad{
         String[] hships = raw1[2].split("\\.");
         main.choice =grid;
         main.running = true;
+        main.choice2 = Integer.parseInt(raw1[5]);
         main.shipsComputer = createShips(cships);
         main.shipsHuman = createShips(hships);
         main.createContent(this.stage);
@@ -182,16 +183,16 @@ public class viewLoad{
                 BattlePoint endPoint = new BattlePoint(Math.abs(Integer.parseInt(coords[2])), Math.abs(Integer.parseInt(coords[3])));
                 if (Integer.parseInt(coords[coords.length - 1]) == 3){
                     Ship newShip = new Destroyer();
-                    newShip.setBody(vert, Math.min(startPoint.x, endPoint.x), Math.min(endPoint.y, startPoint.y));
+                    newShip.setBody(vert, startPoint.x, startPoint.y);
                     res[j] = newShip;
                 }else if (Integer.parseInt(coords[coords.length - 1]) == 4){
                     Ship newShip = new Cruiser();
-                    newShip.setBody(vert, Math.min(startPoint.x, endPoint.x), Math.min(endPoint.y, startPoint.y));
+                    newShip.setBody(vert, startPoint.x,startPoint.y);
                     res[j] = newShip;
                 }
                 else if (Integer.parseInt(coords[coords.length - 1]) == 5){
                     Ship newShip = new Carrier();
-                    newShip.setBody(vert, Math.min(startPoint.x, endPoint.x), Math.min(endPoint.y, startPoint.y));
+                    newShip.setBody(vert,startPoint.x, startPoint.y);
                     res[j] = newShip;
                 }
                 j++;
@@ -211,12 +212,12 @@ public class viewLoad{
                     res[j] = newShip;
                 }else if (Integer.parseInt(coords[coords.length - 1]) == 4){
                     Ship newShip = new Cruiser();
-                    newShip.setBody(vert, Math.min(startPoint.x, endPoint.x), Math.min(endPoint.y, startPoint.y));
+                    newShip.setBody(vert, startPoint.x, startPoint.y);
                     res[j] = newShip;
                 }
                 else if (Integer.parseInt(coords[coords.length - 1]) == 5){
                     Ship newShip = new Carrier();
-                    newShip.setBody(vert, Math.min(startPoint.x, endPoint.x), Math.min(endPoint.y, startPoint.y));
+                    newShip.setBody(vert,startPoint.x,startPoint.y);
                     res[j] = newShip;
                 }
                 j++;

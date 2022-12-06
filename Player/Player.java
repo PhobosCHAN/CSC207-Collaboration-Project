@@ -83,9 +83,9 @@ public class Player {
         for (Ship i: this.ships){
             res += String.valueOf(i.getBody()[0].x) + " " + String.valueOf(i.getBody()[0].y) + " " + String.valueOf(i.getBody()[i.getBody().length - 1].x) + " " + String.valueOf(i.getBody()[i.getBody().length - 1].y + " ");
             if (i.getVertical()){
-                res += 1;
+                res += 0;
             }
-            else{res += 0;}
+            else{res += 1;}
             res += " " + i.getBody().length + ".";
         }
         return res;

@@ -27,6 +27,10 @@ public class Destroyer implements Ship{
         this.vertical = vertical;
     }
 
+    public Destroyer(){
+        this.health = 3;
+    }
+
     /**
      * Getter for ship HP
      */
