@@ -287,36 +287,35 @@ public class viewGame{
         }
     }
 
-    public void deductHp(boolean shot, GridPane grid, int choice){
-        for (int ship = 0; ship < this.main.getShipsHuman().length; ship +=1) {
-            for (int hit = 0; hit < this.main.getShipsHuman()[ship].getHP(); hit +=1) {
-                if (choice == 10){
-                    if(shot & ship == 0){
-                        getChildByRowColumn(grid, 0, hit).getChildren().get(0).setStyle("-fx-fill: red;");
-                    }
-                    else if(shot & ship == 1){
-                        getChildByRowColumn(grid, 2, hit).getChildren().get(0).setStyle("-fx-fill: red;");
-                    }
-                    else if(shot & ship == 2){
-                        getChildByRowColumn(grid, 4, hit).getChildren().get(0).setStyle("-fx-fill: red;");
-                    }
-                    else if(shot & ship == 3){
-                        getChildByRowColumn(grid, 6, hit).getChildren().get(0).setStyle("-fx-fill: red;");
-                    }
-                    else if(shot & ship == 4){
-                        getChildByRowColumn(grid, 8, hit).getChildren().get(0).setStyle("-fx-fill: red;");
-                    }
+    public void deductHp(boolean shot, GridPane grid, int choice) {
+        for (int ship = 0; ship < this.main.getShipsHuman().length; ship += 1) {
+            if (choice == 10) {
+                if (shot & this.main.getShipsHuman()[ship].getHP() < 5 & ship == 0) {
+                    System.out.println("This" + this.main.getShipsHuman()[ship].getHP());
+                    getChildByRowColumn(grid, 0, (5 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
                 }
-                else{
-                    if(shot & ship == 0){
-                        getChildByRowColumn(grid, 0, hit).getChildren().get(0).setStyle("-fx-fill: red;");
-                    }
-                    else if(shot & ship == 1){
-                        getChildByRowColumn(grid, 2, hit).getChildren().get(0).setStyle("-fx-fill: red;");
-                    }
-                    else if(shot & ship == 2){
-                        getChildByRowColumn(grid, 4, hit).getChildren().get(0).setStyle("-fx-fill: red;");
-                    }
+                if (shot & this.main.getShipsHuman()[ship].getHP() < 4 & ship == 1) {
+                    getChildByRowColumn(grid, 2, (4 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
+                }
+                if (shot & this.main.getShipsHuman()[ship].getHP() < 4 & ship == 2) {
+                    getChildByRowColumn(grid, 4, (4 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
+                }
+                if (shot & this.main.getShipsHuman()[ship].getHP() < 3 & ship == 3) {
+                    getChildByRowColumn(grid, 6, (3 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
+                }
+                if (shot & this.main.getShipsHuman()[ship].getHP() < 3 & ship == 4) {
+                    getChildByRowColumn(grid, 8, (3 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
+                }
+            }
+            if (choice == 7) {
+                if (shot & this.main.getShipsHuman()[ship].getHP() < 4 & ship == 0) {
+                    getChildByRowColumn(grid, 0, (4 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
+                }
+                if (shot & this.main.getShipsHuman()[ship].getHP() < 3 & ship == 1) {
+                    getChildByRowColumn(grid, 2, (3 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
+                }
+                if (shot & this.main.getShipsHuman()[ship].getHP() < 3 & ship == 2) {
+                    getChildByRowColumn(grid, 4, (3 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
                 }
             }
         }
