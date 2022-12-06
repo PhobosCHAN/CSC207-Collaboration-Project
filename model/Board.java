@@ -273,6 +273,7 @@ public class Board extends Parent {
                 game.deductHp(wasShot, game.grid, grid);
                 if (!ship.isAlive()) {
                     board.ships--;
+
                 }
                 return true;
             }
