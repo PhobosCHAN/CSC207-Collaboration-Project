@@ -297,7 +297,6 @@ public class viewGame{
         for (int ship = 0; ship < this.main.getShipsHuman().length; ship += 1) {
             if (choice == 10) {
                 if (shot & this.main.getShipsHuman()[ship].getHP() < 5 & ship == 0) {
-                    System.out.println("This" + this.main.getShipsHuman()[ship].getHP());
                     getChildByRowColumn(grid, 0, (5 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
                 }
                 if (shot & this.main.getShipsHuman()[ship].getHP() < 4 & ship == 1) {

@@ -104,8 +104,6 @@ public class viewSettings{
         choiceBox.setOnAction((event) -> {
             int selectedIndex = choiceBox.getSelectionModel().getSelectedIndex();
             Object selectedItem = choiceBox.getSelectionModel().getSelectedItem();
-            System.out.println("Selection made: [" + selectedIndex + "] " + selectedItem);
-            System.out.println("   ChoiceBox.getValue(): " + choiceBox.getValue());
         });
         saveButton.setOnAction(e->{
         });
