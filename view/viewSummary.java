@@ -185,7 +185,7 @@ public class viewSummary {
 
         playAgainButton.setOnAction(e ->{
             this.main = new Main();
-            Scene scene = new Scene(this.main.createContent(this.choice, this.stage));
+            Scene scene = new Scene(this.main.createContent(this.choice, this.main.getAccesibiltyChoice(), this.stage));
             this.stage.setTitle("Playing Battleship");
             this.stage.setScene(scene);
             this.stage.setResizable(false);

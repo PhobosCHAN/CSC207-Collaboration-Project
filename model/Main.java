@@ -59,6 +59,7 @@ public class Main extends Application {
     private int lastX, lastY;
 
     private int choice;
+    private int choice2;
 
     private boolean enemyTurn = false;
 
@@ -113,8 +114,9 @@ public class Main extends Application {
      * A function to create the player ships and assign them to each player.
      * @param choice is 10 if the game is being played in normal mode and 7 if the game is being played in fast mode
      */
-    public void populatePlayerShips(int choice){
+    public void populatePlayerShips(int choice, int choice2){
         this.choice = choice;
+        this.choice2 = choice2;
         currentShipIndex = 0;
         ComputerCurrentIndex = 0;
         ShipFactory shipFactory = new ShipFactory();
@@ -167,10 +169,10 @@ public class Main extends Application {
      * @param stage an object for Stage for the javafx
      * @return root: an object of the Parent class
      */
-    public Parent createContent(int choice, Stage stage) {
+    public Parent createContent(int choice, int choice2, Stage stage) {
         this.game = new viewGame(stage, this);
         this.stage = stage;
-        this.populatePlayerShips(choice);
+        this.populatePlayerShips(choice, choice2);
         human = new Player("human", shipsHuman, this.choice == 7);
         computer = new Player("computer", shipsComputer, this.choice == 7);
         BorderPane root = new BorderPane();
@@ -250,7 +252,8 @@ public class Main extends Application {
         String bip = "/Users/aryamansuri/Desktop/CSProject/Stack_Overload_Certified-CSC207/Sounds/";
         Media media = new Media(new File(bip.concat(audios[x])).toURI().toString());
         MediaPlayer mediaplayer = new MediaPlayer(media);
-        mediaplayer.play();
+        if(this.choice2 == 1)
+            mediaplayer.play();
     }
 
     /**
@@ -352,6 +355,10 @@ public class Main extends Application {
         if(winner == null)
             return "Computer";
         return "Human";
+    }
+
+    public int getAccesibiltyChoice(){
+        return this.choice2;
     }
 
     /**
