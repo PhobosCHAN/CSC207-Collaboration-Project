@@ -178,7 +178,7 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
         root.setPrefSize(800, 700);
         root.setLeft(game.leftButtons(this.choice));
-        root.setRight(game.rightInteractive(this.choice));
+        root.setRight(game.rightInteractive(choice, choice2));
         enemyBoard = new Board(this.game, true, choice, event -> {
             if (!running)
                 return;
@@ -238,7 +238,7 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
         root.setPrefSize(800, 700);
         root.setLeft(game.leftButtons(this.choice));
-        root.setRight(game.rightInteractive(this.choice));
+        root.setRight(game.rightInteractive(this.choice, this.choice2));
 
         enemyBoard = new Board(this.game, true, choice, event -> {
             if (!running)
