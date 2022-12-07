@@ -16,6 +16,7 @@ import javafx.scene.Group;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import view.viewLoad;
 import view.viewSummary;
 
 import view.viewStart;
@@ -45,30 +46,29 @@ import static java.lang.Thread.sleep;
  */
 public class Main extends Application {
 
-
-    private view.viewGame game;
+    public view.viewGame game;
     Stage stage;
-    private boolean running = false;
-    private model.Board enemyBoard, playerBoard;
-    private Ship[] shipsHuman;
-    private Ship[] shipsComputer;
+    public boolean running = false;
+    public model.Board enemyBoard, playerBoard;
+    public Ship[] shipsHuman;
+    public Ship[] shipsComputer;
 
-    private int currentShipIndex;
-    private int ComputerCurrentIndex;
+    public int currentShipIndex;
+    public int ComputerCurrentIndex;
 
-    private int lastX, lastY;
+    public int lastX, lastY;
 
-    private int choice;
-    private int choice2;
+    public int choice;
+    public int choice2;
 
-    private boolean enemyTurn = false;
+    public boolean enemyTurn = false;
 
-    private String winner;
+    public String winner;
 
-    Player human;
-    Player computer;
+    public Player human;
+    public Player computer;
 
-    private Random random = new Random();
+    public Random random = new Random();
 
     /**
      * A getter for the list of ships belonging to the human player.
@@ -185,17 +185,12 @@ public class Main extends Application {
             Cell cell = (Cell) event.getSource();
             if (cell.wasShot)
                 return;
-            //this.soundProducer(cell.x);
-            //this.soundProducer(10); //Silence
-            //this.soundProducer(cell.y);
             this.human.setTotalShots();
             enemyTurn = !cell.shoot(computer);
+            this.soundProducer(cell.x, cell.y, !enemyTurn);
             if(!enemyTurn) {
                 this.human.setHits();
-                this.soundProducer(11); //Hit sound
             }
-            else
-                this.soundProducer(12); //Miss sound
             if (computer.getHp() == 0) {
                 viewSummary summary = new viewSummary(this.stage, 1, this, this.choice, this.choice2);
                 winner = "Human";
@@ -233,7 +228,92 @@ public class Main extends Application {
         return root;
     }
 
-    public void soundProducer(int x) {
+    public Parent createContent(Stage stage) {
+        this.game = new viewGame(stage, this);
+        this.stage = stage;
+        human = new Player("human", shipsHuman, this.choice == 7);
+        computer = new Player("computer", shipsComputer, this.choice == 7);
+        human.setShips(this.shipsHuman);
+        computer.setShips(this.shipsComputer);
+        BorderPane root = new BorderPane();
+        root.setPrefSize(800, 700);
+        root.setLeft(game.leftButtons(this.choice));
+        root.setRight(game.rightInteractive(this.choice));
+
+        enemyBoard = new Board(this.game, true, choice, event -> {
+            if (!running)
+                return;
+            Cell cell = (Cell) event.getSource();
+            if (cell.wasShot)
+                return;
+            this.human.setTotalShots();
+            enemyTurn = !cell.shoot(computer);
+            this.soundProducer(cell.x, cell.y, !enemyTurn);
+            if(!enemyTurn)
+                this.human.setHits();
+            if (computer.getHp() == 0) {
+                viewSummary summary = new viewSummary(this.stage, 1, this, this.choice, this.choice2);
+                winner = "Human";
+            }
+            if (enemyTurn){
+                try {
+                    enemyMove();
+                } catch (InterruptedException ignored) {
+                }
+            }
+        });
+        playerBoard = new Board(this.game,false, choice, event -> {
+            if (running)
+                return;
+
+            Cell cell = (Cell) event.getSource();
+            boolean vert = event.getButton() == MouseButton.PRIMARY;
+            shipsHuman[currentShipIndex].setVertical(vert);
+            shipsHuman[currentShipIndex].setBody(vert, cell.x, cell.y);
+            if (playerBoard.placeShip(shipsHuman[currentShipIndex], cell.x, cell.y)) {
+                if ((currentShipIndex + 1) == 5 & choice == 10) {
+                    game.instructions2();
+                    startGame();
+                }
+                // Configured: For the 3v3 game mode. Ships used = 4, 3, 3
+                else if ((currentShipIndex + 1) == 3 & choice == 7){
+                    game.instructions2();
+                    startGame();
+                }
+                currentShipIndex++;
+            }
+        });
+        for (Ship i: shipsHuman){
+            playerBoard.placeShip(i,i.getBody()[0].getX(), i.getBody()[0].getY());
+        }
+        for (Ship i: shipsComputer){
+            enemyBoard.placeShip(i,i.getBody()[0].getX(), i.getBody()[0].getY());
+        }
+
+        String[] computershot = viewLoad.raw1[3].split(" ");
+        String[] humanshot = viewLoad.raw1[4].split(" ");
+        for (int i = 0; i < computershot.length; i++){
+            if (Objects.equals(computershot[i], "true")){
+                int x = i/choice;
+                int y = i%choice;
+                enemyBoard.getCell(x,y).shoot(computer);
+            }
+        }
+        for (int i = 0; i < humanshot.length; i++){
+            if (Objects.equals(humanshot[i], "true")){
+                int x = i/choice;
+                int y = i%choice;
+                playerBoard.getCell(x,y).shoot(human);
+            }
+        }
+        root.setCenter(game.layout(choice));
+        //root.setBackground();
+        return root;
+    }
+
+    public void soundProducer(int x, int y, boolean hit) {
+
+        LinkedList<Media> sounds = new LinkedList<>();
         String n0 = "num0.wav";
         String n1 = "num1.wav";
         String n2 = "num2.wav";
@@ -248,12 +328,35 @@ public class Main extends Application {
         String n11 = "hit.wav";
         String n12 = "miss.wav";
         String[] audios = {n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12};
-        //Change this
-        String bip = "/Users/aryamansuri/Desktop/CSProject/Stack_Overload_Certified-CSC207/Sounds/";
+        String bip = "./Sounds/";
+
         Media media = new Media(new File(bip.concat(audios[x])).toURI().toString());
-        MediaPlayer mediaplayer = new MediaPlayer(media);
+        Media media2 = new Media(new File(bip.concat(audios[y])).toURI().toString());
+        //Media media3 = new Media(new File(bip.concat("silence.wav")).toURI().toString());  //for 2 sec silence
+
+        if(hit){
+            Media media4 = new Media(new File(bip.concat("hit.wav")).toURI().toString());
+            sounds.add(media4);
+        }
+        else{
+            Media media5 = new Media(new File(bip.concat("miss.wav")).toURI().toString());
+            sounds.add(media5);
+        }
+        sounds.add(media);
+        sounds.add(media2);
         if(this.choice2 == 1)
-            mediaplayer.play();
+            this.play(sounds);
+    }
+
+    /**
+     * Helper function for the sounds producer
+     */
+    public void play(LinkedList<Media> sounds) {
+        if (sounds.isEmpty())
+            return;
+        MediaPlayer player = new MediaPlayer(sounds.poll());
+        player.setOnEndOfMedia(() -> play(sounds));
+        player.play();
     }
 
     /**

@@ -22,7 +22,11 @@ import model.Main;
 import model.Board;
 import ship.Ship;
 
-import java.util.ArrayList;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 /**
  * Contains all the neccessary views to present through Java FX.
@@ -174,6 +178,25 @@ public class viewGame{
         settingsButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         saveButton.setOnAction(e->{
+            Board enemyboard = main.getEnemyBoard();
+            Board playerboard = main.getPlayerBoardBoard();
+            Ship[] enemyships = main.shipsComputer;
+            Ship[] playerships = main.shipsHuman;
+            int grid = enemyboard.grid;
+            Date date = Calendar.getInstance().getTime();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+            String strDate = dateFormat.format(date) + ".txt";
+            final File dir = new File("./view/boards");
+            try {
+                final File file =  new File(dir, strDate);
+                FileWriter myWriter = new FileWriter(file);
+                myWriter.write(grid + main.computer.getShips() + main.human.getShips() + enemyboard.toString() + playerboard.toString() + "null" +main.choice2);
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException ecep) {
+                System.out.println("An error occurred.");
+                ecep.printStackTrace();
+            }
         });
         settingsButton.setOnAction(e->{
         });
@@ -297,7 +320,6 @@ public class viewGame{
         for (int ship = 0; ship < this.main.getShipsHuman().length; ship += 1) {
             if (choice == 10) {
                 if (shot & this.main.getShipsHuman()[ship].getHP() < 5 & ship == 0) {
-                    System.out.println("This" + this.main.getShipsHuman()[ship].getHP());
                     getChildByRowColumn(grid, 0, (5 - this.main.getShipsHuman()[ship].getHP())).getChildren().get(0).setStyle("-fx-fill: red;");
                 }
                 if (shot & this.main.getShipsHuman()[ship].getHP() < 4 & ship == 1) {

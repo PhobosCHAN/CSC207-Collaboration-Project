@@ -281,4 +281,15 @@ public class Board extends Parent {
             return false;
         }
     }
+    @Override
+    public String toString() {
+        String res = null;
+        for (int i = 0; i < grid; i++) {
+            for (int j = 0; j < grid; j++) {
+                res += getCell(i, j).wasShot;
+                res+= " ";
+            }
+        }
+        return res;
+    }
 }

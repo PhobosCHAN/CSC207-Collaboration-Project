@@ -164,6 +164,7 @@ public class viewStart {
 
         loadButton.setOnAction(e ->{
             viewLoad load =  new viewLoad(this.stage);
+
         });
 
         hbox.getChildren().addAll(gameStartButton, loadButton);
@@ -196,8 +197,6 @@ public class viewStart {
             else if(selectedIndex == 1){
                 this.choice = 7;
             }
-            System.out.println("Selection made: [" + selectedIndex + "] " + selectedItem);
-            System.out.println("   ChoiceBox.getValue(): " + choiceBox.getValue());
         });
         accessibilityBox.setOnAction((event) -> {
             int selectedChoice = accessibilityBox.getSelectionModel().getSelectedIndex();
@@ -208,8 +207,6 @@ public class viewStart {
             else if(selectedChoice == 1){
                 this.choice2 = 0;
             }
-            System.out.println("Selection choice: [" + selectedChoice + "] " + selectedOption);
-            System.out.println("   accessibilityBox.getValue(): " + accessibilityBox.getValue());
         });
         return screen;
     }

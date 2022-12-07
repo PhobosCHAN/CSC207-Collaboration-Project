@@ -27,6 +27,10 @@ public class Carrier implements Ship{
         this.health = 5;
         this.vertical = vertical;
     }
+
+    public Carrier(){
+        this.health = 5;
+    }
     /**
      * Getter for ship HP
      */
