@@ -37,7 +37,7 @@ import java.util.Date;
 public class viewGame{
     Main main;
     Stage stage;
-    Button placementButton, shootingButton, saveButton, settingsButton;
+    Button placementButton, shootingButton, saveButton, restartButton;
 
     public GridPane grid;
 
@@ -159,7 +159,7 @@ public class viewGame{
         return vbox;
     }
 
-    public VBox rightInteractive(int choice){
+    public VBox rightInteractive(int choice, int choice2){
         this.grid = createBoard(choice);
         Text title1 = new Text("HP BAR");
         title1.setFill(Color.GREEN);
@@ -171,11 +171,11 @@ public class viewGame{
         saveButton.setFont(new Font(12));
         saveButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-        settingsButton = new Button("SETTINGS");
-        settingsButton.setId("settings");
-        settingsButton.setPrefSize(180, 50);
-        settingsButton.setFont(new Font(12));
-        settingsButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+        restartButton = new Button("RESTART");
+        restartButton.setId("restart");
+        restartButton.setPrefSize(180, 50);
+        restartButton.setFont(new Font(12));
+        restartButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         saveButton.setOnAction(e->{
             Board enemyboard = main.getEnemyBoard();
@@ -197,8 +197,15 @@ public class viewGame{
                 System.out.println("An error occurred.");
                 ecep.printStackTrace();
             }
+            saveDialog();
         });
-        settingsButton.setOnAction(e->{
+        restartButton.setOnAction(e->{
+            this.main = new Main();
+            Scene scene = new Scene(this.main.createContent(choice, choice2, this.stage));
+            this.stage.setTitle("Playing Battleship");
+            this.stage.setScene(scene);
+            this.stage.setResizable(false);
+            this.stage.show();
         });
         String border = """
                 -fx-border-color: red;
@@ -208,7 +215,7 @@ public class viewGame{
                 """;
         VBox hp = new VBox(this.grid); // add interactive hp bar in the bracket.
         hp.setStyle(border);
-        VBox vbox = new VBox(10,title1, hp,saveButton,settingsButton);
+        VBox vbox = new VBox(10,title1, hp,saveButton,restartButton);
         vbox.setAlignment(Pos.CENTER);
         vbox.setPadding(new Insets(10, 2, 1, 10));
         return vbox;
@@ -399,5 +406,21 @@ public class viewGame{
         grid.setAlignment(Pos.CENTER);
         grid.add(hbox, 1, 0);
         return grid;
+    }
+    public void saveDialog(){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.getDialogPane().getButtonTypes().add(new ButtonType("I UNDERSTAND", ButtonBar.ButtonData.CANCEL_CLOSE));
+        dialog.setGraphic(saveStatement());
+        dialog.getDialogPane().setPadding(new Insets(1, 1, 1, 100));
+        dialog.getDialogPane().setMaxSize(1, 2);
+        dialog.showAndWait();
+    }
+    public VBox saveStatement(){
+        Text title1 = new Text("PLACEMENT PHASE:");
+        title1.setFill(Color.RED);
+        title1.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        VBox vbox = new VBox(10, title1);
+        vbox.setAlignment(Pos.CENTER);
+        return vbox;
     }
 }
