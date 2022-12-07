@@ -2,7 +2,6 @@ package model;
 import java.util.Arrays;
 import java.util.Random;
 import Player.Player;
-import javafx.scene.paint.Color;
 
 public class StrategyHit implements Strategy{
 

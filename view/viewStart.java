@@ -5,10 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image ;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -197,8 +195,6 @@ public class viewStart {
             else if(selectedIndex == 1){
                 this.choice = 7;
             }
-            System.out.println("Selection made: [" + selectedIndex + "] " + selectedItem);
-            System.out.println("   ChoiceBox.getValue(): " + choiceBox.getValue());
         });
         accessibilityBox.setOnAction((event) -> {
             int selectedChoice = accessibilityBox.getSelectionModel().getSelectedIndex();
@@ -209,8 +205,6 @@ public class viewStart {
             else if(selectedChoice == 1){
                 this.choice2 = 0;
             }
-            System.out.println("Selection choice: [" + selectedChoice + "] " + selectedOption);
-            System.out.println("   accessibilityBox.getValue(): " + accessibilityBox.getValue());
         });
         return screen;
     }

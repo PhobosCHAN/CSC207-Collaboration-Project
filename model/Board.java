@@ -6,23 +6,12 @@ import java.util.concurrent.TimeUnit;
 
 import Player.Player;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Cell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import ship.Ship;
 import Player.Computer;
 
@@ -177,7 +166,6 @@ public class Board extends Parent {
             for (int i = x; i < x + length; i++) {
                 if (!isValidPoint(i, y))
                     return false;
-
                 Cell cell = getCell(i, y);
                 if (cell.ship != null)
                     return false;
@@ -239,7 +227,6 @@ public class Board extends Parent {
             setFill(Color.LIGHTBLUE);
             setStroke(Color.BLUE);
         }
-
         /**
          * A function that allows player to shoot the cell
          * @param player An object of Player class representing the player that is shooting the cell

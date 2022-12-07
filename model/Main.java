@@ -1,36 +1,21 @@
 package model;
 
-import java.awt.*;
 import java.io.File;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import javafx.geometry.Insets;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
+
 import view.viewLoad;
 import view.viewSummary;
 
 import view.viewStart;
 import Player.Player;
-import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import model.Board.Cell;
@@ -38,14 +23,12 @@ import ship.Ship;
 import ship.ShipFactory;
 import view.viewGame;
 
-import static java.lang.Thread.sleep;
 
 /**
  * A BattleShip Application, in JavaFX
  *
  */
 public class Main extends Application {
-
 
     public view.viewGame game;
     Stage stage;
@@ -179,22 +162,19 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
         root.setPrefSize(800, 700);
         root.setLeft(game.leftButtons(this.choice));
-        root.setRight(game.rightInteractive(this.choice));
+        root.setRight(game.rightInteractive(choice, choice2));
         enemyBoard = new Board(this.game, true, choice, event -> {
             if (!running)
                 return;
             Cell cell = (Cell) event.getSource();
             if (cell.wasShot)
                 return;
-
             this.human.setTotalShots();
             enemyTurn = !cell.shoot(computer);
+            this.soundProducer(cell.x, cell.y, !enemyTurn);
             if(!enemyTurn) {
                 this.human.setHits();
-                this.soundProducer(11); //Hit sound
             }
-            else
-                this.soundProducer(12); //Miss sound
             if (computer.getHp() == 0) {
                 viewSummary summary = new viewSummary(this.stage, 1, this, this.choice, this.choice2);
                 winner = "Human";
@@ -242,7 +222,7 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
         root.setPrefSize(800, 700);
         root.setLeft(game.leftButtons(this.choice));
-        root.setRight(game.rightInteractive(this.choice));
+        root.setRight(game.rightInteractive(this.choice, this.choice2));
 
         enemyBoard = new Board(this.game, true, choice, event -> {
             if (!running)
@@ -252,11 +232,9 @@ public class Main extends Application {
                 return;
             this.human.setTotalShots();
             enemyTurn = !cell.shoot(computer);
-            if(!enemyTurn){
+            this.soundProducer(cell.x, cell.y, !enemyTurn);
+            if(!enemyTurn)
                 this.human.setHits();
-                this.soundProducer(11);} //Hit sound
-            else
-                this.soundProducer(12);
             if (computer.getHp() == 0) {
                 viewSummary summary = new viewSummary(this.stage, 1, this, this.choice, this.choice2);
                 winner = "Human";
@@ -317,7 +295,9 @@ public class Main extends Application {
         return root;
     }
 
-    public void soundProducer(int x) {
+    public void soundProducer(int x, int y, boolean hit) {
+
+        LinkedList<Media> sounds = new LinkedList<>();
         String n0 = "num0.wav";
         String n1 = "num1.wav";
         String n2 = "num2.wav";
@@ -332,12 +312,35 @@ public class Main extends Application {
         String n11 = "hit.wav";
         String n12 = "miss.wav";
         String[] audios = {n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12};
-        //Change this
         String bip = "./Sounds/";
+
         Media media = new Media(new File(bip.concat(audios[x])).toURI().toString());
-        MediaPlayer mediaplayer = new MediaPlayer(media);
+        Media media2 = new Media(new File(bip.concat(audios[y])).toURI().toString());
+        //Media media3 = new Media(new File(bip.concat("silence.wav")).toURI().toString());  //for 2 sec silence
+
+        if(hit){
+            Media media4 = new Media(new File(bip.concat("hit.wav")).toURI().toString());
+            sounds.add(media4);
+        }
+        else{
+            Media media5 = new Media(new File(bip.concat("miss.wav")).toURI().toString());
+            sounds.add(media5);
+        }
+        sounds.add(media);
+        sounds.add(media2);
         if(this.choice2 == 1)
-            mediaplayer.play();
+            this.play(sounds);
+    }
+
+    /**
+     * Helper function for the sounds producer
+     */
+    public void play(LinkedList<Media> sounds) {
+        if (sounds.isEmpty())
+            return;
+        MediaPlayer player = new MediaPlayer(sounds.poll());
+        player.setOnEndOfMedia(() -> play(sounds));
+        player.play();
     }
 
     /**
