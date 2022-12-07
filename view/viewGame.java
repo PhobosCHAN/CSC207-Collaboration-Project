@@ -27,10 +27,9 @@ import java.util.Date;
 
 /**
  * Contains all the neccessary views to present through Java FX.
+ * This is the constructor for viewGame.
  *
- * Instructions
  */
-
 public class viewGame{
     Main main;
     Stage stage;
@@ -39,12 +38,22 @@ public class viewGame{
     public GridPane grid;
 
     private Ship[] ships;
+
+    /**
+     * The constructor for the viewGame
+     * @param stage - takes the current stage
+     * @param main - takes the current main
+     */
     public viewGame(Stage stage, Main main){
         this.main = main;
         this.stage = stage;
         this.ships = main.getShipsHuman();
     }
 
+    /**
+     * The dialog box to show the instructions of where to place the ships before phase 1.
+     * @param ships - takes in the number of ships.
+     */
     public void instructions1(int ships){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.getDialogPane().getButtonTypes().add(new ButtonType("I UNDERSTAND", ButtonBar.ButtonData.CANCEL_CLOSE));
@@ -54,6 +63,10 @@ public class viewGame{
         dialog.showAndWait();
     }
 
+    /**
+     * The dialog box to show the instructions of how to shoot in during the shooting phase.
+     *
+     */
     public void instructions2(){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.getDialogPane().getButtonTypes().add(new ButtonType("I UNDERSTAND", ButtonBar.ButtonData.CANCEL_CLOSE));
@@ -64,6 +77,10 @@ public class viewGame{
     }
 
 
+    /**
+     * The VBox to create titles and texts.
+     * @param ships - takes in the number of ships.
+     */
     public VBox placementIns(int ships){
         Text title1 = new Text("PLACEMENT PHASE:");
         title1.setFill(Color.RED);
@@ -84,6 +101,10 @@ public class viewGame{
         return vbox;
     }
 
+    /**
+     * The VBox to create titles and texts.
+     *
+     */
     public VBox shootingIns(){
         Text title1 = new Text("SHOOTING PHASE:");
         title1.setFill(Color.RED);
@@ -110,6 +131,10 @@ public class viewGame{
         return vbox;
     }
 
+    /**
+     * The VBox to create the buttons, titles and text.
+     * @param choice - takes in the choice for the gamemode.
+     */
     public VBox leftButtons(int choice){
         Text title1 = new Text("INSTRUCTIONS");
         title1.setFill(Color.GREEN);
@@ -156,6 +181,11 @@ public class viewGame{
         return vbox;
     }
 
+    /**
+     * The VBox to create titles, buttons and texts.
+     * @param choice - game mode choice made by the player.
+     * @param choice2 - accessibility choice made by the player
+     */
     public VBox rightInteractive(int choice, int choice2){
         this.grid = createBoard(choice);
         Text title1 = new Text("HP BAR");
@@ -175,6 +205,7 @@ public class viewGame{
         restartButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         saveButton.setOnAction(e->{
+            // The entire save function for the game.
             Board enemyboard = main.getEnemyBoard();
             Board playerboard = main.getPlayerBoardBoard();
             Ship[] enemyships = main.shipsComputer;
@@ -217,6 +248,12 @@ public class viewGame{
         vbox.setPadding(new Insets(10, 2, 1, 10));
         return vbox;
     }
+
+    /**
+     * The GridPane created to show the grid of the game
+     * @param choice - game mode choice made by the player.
+     *
+     */
     public GridPane createBoard(int choice) {
         int grid = 9;
         if (choice == 10){
@@ -285,6 +322,10 @@ public class viewGame{
         return hpBoard;
     }
 
+    /**
+     * To paint the interactive hp bar for the player.
+     * @param choice - game mode choice made by the player.
+     */
     public void painthp(GridPane grid, int choice) {
         for (int y = 0; y < grid.getColumnCount(); y++) {
             for (int x = 0; x < grid.getRowCount(); x++){
@@ -320,6 +361,12 @@ public class viewGame{
         }
     }
 
+    /**
+     * A method to determine the health of the player consistently.
+     * @param choice - game mode choice made by the player.
+     * @param shot - a boolean to check if there was a shot.
+     * @param grid - a gridpane to run changes when there is health deducted.
+     */
     public void deductHp(boolean shot, GridPane grid, int choice) {
         for (int ship = 0; ship < this.main.getShipsHuman().length; ship += 1) {
             if (choice == 10) {
@@ -352,6 +399,13 @@ public class viewGame{
             }
         }
     }
+
+    /**
+     * The getter method to ease the collection of a grid in the hp bar.
+     * @param gridPane - the grid where you want to collect the coordinates from.
+     * @param x - the x-coordinate to collect from the gridPane.
+     * @param y - the y-coordinate to collect from the gridPane.
+     */
     public static StackPane getChildByRowColumn(GridPane gridPane, int x, int y){
 
         for(final Node node : gridPane.getChildren()){
@@ -361,6 +415,11 @@ public class viewGame{
         return null;
     }
 
+    /**
+     * The gridPane created to label the grid of the main game.
+     * @param choice - game mode choice made by the player.
+     *
+     */
     public GridPane layout(int choice){
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -404,6 +463,11 @@ public class viewGame{
         grid.add(hbox, 1, 0);
         return grid;
     }
+
+    /**
+     * A dialog box created to show that a save has been made
+     *
+     */
     public void saveDialog(){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.getDialogPane().getButtonTypes().add(new ButtonType("CLOSE", ButtonBar.ButtonData.CANCEL_CLOSE));
@@ -412,6 +476,10 @@ public class viewGame{
         dialog.getDialogPane().setMaxSize(1, 2);
         dialog.showAndWait();
     }
+    /**
+     * A VBox created to show in the Dialog Box.
+     *
+     */
     public VBox saveStatement(){
         Text title1 = new Text("Game Saved!");
         title1.setFill(Color.RED);
