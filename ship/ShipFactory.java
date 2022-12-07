@@ -2,9 +2,6 @@ package ship;
 
 import model.BattlePoint;
 
-import javax.naming.directory.BasicAttribute;
-import javax.swing.*;
-
 /**
  * A ShipFactory class that creates a ship based on the given size.
  */

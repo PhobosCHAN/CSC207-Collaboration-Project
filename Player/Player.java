@@ -1,6 +1,5 @@
 package Player;
 
-import model.BattlePoint;
 import model.HP;
 import ship.Ship;
 

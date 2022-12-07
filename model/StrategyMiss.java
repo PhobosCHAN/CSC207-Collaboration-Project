@@ -1,7 +1,6 @@
 package model;
 
 import Player.Player;
-import javafx.scene.paint.Color;
 
 import java.util.Random;
 

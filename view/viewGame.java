@@ -3,14 +3,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image ;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -409,14 +406,14 @@ public class viewGame{
     }
     public void saveDialog(){
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.getDialogPane().getButtonTypes().add(new ButtonType("I UNDERSTAND", ButtonBar.ButtonData.CANCEL_CLOSE));
+        dialog.getDialogPane().getButtonTypes().add(new ButtonType("CLOSE", ButtonBar.ButtonData.CANCEL_CLOSE));
         dialog.setGraphic(saveStatement());
         dialog.getDialogPane().setPadding(new Insets(1, 1, 1, 100));
         dialog.getDialogPane().setMaxSize(1, 2);
         dialog.showAndWait();
     }
     public VBox saveStatement(){
-        Text title1 = new Text("PLACEMENT PHASE:");
+        Text title1 = new Text("Game Saved!");
         title1.setFill(Color.RED);
         title1.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
         VBox vbox = new VBox(10, title1);

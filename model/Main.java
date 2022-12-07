@@ -1,36 +1,21 @@
 package model;
 
-import java.awt.*;
 import java.io.File;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import javafx.geometry.Insets;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
+
 import view.viewLoad;
 import view.viewSummary;
 
 import view.viewStart;
 import Player.Player;
-import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import model.Board.Cell;
@@ -38,7 +23,6 @@ import ship.Ship;
 import ship.ShipFactory;
 import view.viewGame;
 
-import static java.lang.Thread.sleep;
 
 /**
  * A BattleShip Application, in JavaFX
