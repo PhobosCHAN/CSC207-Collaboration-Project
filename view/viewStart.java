@@ -5,10 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image ;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -16,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import model.Main;
+import view.viewGame;
 
 /**
  * Battleship game UI
@@ -30,21 +29,25 @@ import model.Main;
  *
  */
 public class viewStart {
+    viewGame game;
     Main main;
     Stage stage;
     BorderPane borderPane;
     Button settingsButton, gameStartButton, loadButton;
 
-    int choice; // Let 1 represent game mode (5v5) and 2 represent game mode (3v3)
+    int choice; // Let 10 represent game mode (5v5) and 7 represent game mode (3v3)
+    int choice2; // Let 1 represent voiceover being on and 2 represent voiceover being off
 
     private ListView<String> gameModes;
     private double width; //height and width of canvas
     private double height;
 
     public viewStart(Stage stage, Main main){
+        this.game = new viewGame(stage, main);
         this.main = main;
         this.stage = stage;
         this.choice = 10;
+        this.choice2 = 1;
         initUI();
     }
 
@@ -142,14 +145,24 @@ public class viewStart {
         loadButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         gameStartButton.setOnAction(e ->{
-            Scene scene = new Scene(main.createContent(this.choice, this.stage));
+            Scene scene = new Scene(main.createContent(this.choice, this.choice2, this.stage));
             this.stage.setTitle("Playing Battleship");
             this.stage.setScene(scene);
             this.stage.setResizable(false);
             this.stage.show();
+            if (this.choice == 10){
+                game.instructions1(5);
+                this.stage.requestFocus();
+            }
+            else if (this.choice == 7){
+                game.instructions1(3);
+                this.stage.requestFocus();
+            }
         });
 
         loadButton.setOnAction(e ->{
+            viewLoad load =  new viewLoad(this.stage);
+
         });
 
         hbox.getChildren().addAll(gameStartButton, loadButton);
@@ -182,20 +195,16 @@ public class viewStart {
             else if(selectedIndex == 1){
                 this.choice = 7;
             }
-            System.out.println("Selection made: [" + selectedIndex + "] " + selectedItem);
-            System.out.println("   ChoiceBox.getValue(): " + choiceBox.getValue());
         });
         accessibilityBox.setOnAction((event) -> {
             int selectedChoice = accessibilityBox.getSelectionModel().getSelectedIndex();
             Object selectedOption = accessibilityBox.getSelectionModel().getSelectedItem();
             if (selectedChoice == 0){
-                this.choice = 10;
+                this.choice2 = 1;
             }
             else if(selectedChoice == 1){
-                this.choice = 7;
+                this.choice2 = 0;
             }
-            System.out.println("Selection choice: [" + selectedChoice + "] " + selectedOption);
-            System.out.println("   accessibilityBox.getValue(): " + accessibilityBox.getValue());
         });
         return screen;
     }

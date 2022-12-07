@@ -4,10 +4,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image ;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -26,7 +24,6 @@ import javafx.stage.Stage;
 
 public class viewSettings{
     Stage stage;
-    //BattleModel model;
     BorderPane borderPane;
     Button saveButton;
     public viewSettings(Stage stage){
@@ -105,11 +102,28 @@ public class viewSettings{
         choiceBox.setOnAction((event) -> {
             int selectedIndex = choiceBox.getSelectionModel().getSelectedIndex();
             Object selectedItem = choiceBox.getSelectionModel().getSelectedItem();
-            System.out.println("Selection made: [" + selectedIndex + "] " + selectedItem);
-            System.out.println("   ChoiceBox.getValue(): " + choiceBox.getValue());
         });
         saveButton.setOnAction(e->{
+            saveDialog();
         });
         return screen;
+    }
+
+    public void saveDialog(){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.getDialogPane().getButtonTypes().add(new ButtonType("I UNDERSTAND", ButtonBar.ButtonData.CANCEL_CLOSE));
+        dialog.setGraphic(saveStatement());
+        dialog.getDialogPane().setPadding(new Insets(1, 1, 1, 100));
+        dialog.getDialogPane().setMaxSize(1, 2);
+        dialog.showAndWait();
+    }
+
+    public VBox saveStatement(){
+        Text title1 = new Text("PLACEMENT PHASE:");
+        title1.setFill(Color.RED);
+        title1.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        VBox vbox = new VBox(10, title1);
+        vbox.setAlignment(Pos.CENTER);
+        return vbox;
     }
 }

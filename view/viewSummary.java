@@ -4,17 +4,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image ;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import model.Board;
 import model.Main;
 
 /**
@@ -46,12 +42,14 @@ public class viewSummary {
     Button closeButton, playAgainButton, proceedButton;
     private int choice;
     private int winner;
+    private int choice2;
 
-    public viewSummary(Stage stage, int winner, Main main, int choice){
+    public viewSummary(Stage stage, int winner, Main main, int choice, int choice2){
         this.stage = stage;
         this.winner = winner;
         this.main = main;
         this.choice = choice;
+        this.choice2 = choice2;
         initUI();
     }
 
@@ -143,22 +141,22 @@ public class viewSummary {
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 10, 0, 10));
 
-        Text title1 = new Text("Game Mode: "); //  wanna add + getGameMode()
+        Text title1 = new Text("Game Mode: " + main.getGameMode()); //  wanna add + getGameMode()
         title1.setFill(Color.ORANGE);
         title1.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         grid.add(title1, 1, 5);
 
-        Text title2 = new Text("Winner: "); // want to add which player won
+        Text title2 = new Text("Winner: " + main.getWinner()); // want to add which player won
         title2.setFill(Color.ORANGE);
         title2.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         grid.add(title2, 1, 6);
 
         // Subtitle in columns 2-3, row 2
-        Text small = new Text("Player's Accuracy For The Entire Game: "); //+ calculatePaccuracy
+        Text small = new Text("Player's Accuracy For The Entire Game: " + main.getHumanAccuracy() + "%") ; //+ calculatePaccuracy
         small.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         small.setFill(Color.ORANGE);
         grid.add(small, 1, 7);
-        Text small2 = new Text("Computer's Accuracy For The Entire Game: "); //+ calculateCaccuracy
+        Text small2 = new Text("Computer's Accuracy For The Entire Game: " + main.getComputerAccuracy() + "%"); //+ calculateCaccuracy
         small2.setFont(Font.font("Arial", FontWeight.LIGHT, 30));
         small2.setFill(Color.ORANGE);
         grid.add(small2, 1, 8);
@@ -185,7 +183,7 @@ public class viewSummary {
 
         playAgainButton.setOnAction(e ->{
             this.main = new Main();
-            Scene scene = new Scene(this.main.createContent(this.choice, this.stage));
+            Scene scene = new Scene(this.main.createContent(this.choice, this.choice2, this.stage));
             this.stage.setTitle("Playing Battleship");
             this.stage.setScene(scene);
             this.stage.setResizable(false);
