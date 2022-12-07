@@ -1,6 +1,5 @@
 package view;
 
-import Player.Player;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,18 +18,11 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import model.BattlePoint;
-import model.Board;
 import model.Main;
 import ship.*;
 
 /**
- *
- *                      Choice Box:
- *                      -
- *                      -
- *                      -
- *                     Load Game
- *
+ * The class for the load function.
  */
 
 public class viewLoad{
@@ -46,6 +38,11 @@ public class viewLoad{
     public static String[] raw1;
 
     private ListView<String> gamesList;
+
+    /**
+     * A constructor for the load function which includes a listView and a seperate scene to show the saved files.
+     * @param stage
+     */
     public viewLoad(Stage stage){
         this.stage = stage;
         this.borderPane = new BorderPane();
@@ -166,6 +163,12 @@ public class viewLoad{
         main.createContent(this.stage);
 
     }
+
+    /**
+     * A method created to load ships from a save file into the game.
+     * @param ships
+     * @return
+     */
     public Ship[] createShips(String[] ships){
         if (ships.length == 5){
             Ship[] res = new Ship[5];

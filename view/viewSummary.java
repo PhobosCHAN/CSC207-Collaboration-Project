@@ -14,12 +14,6 @@ import javafx.stage.Stage;
 import model.Main;
 
 /**
- * Happens right after the last ship of a player is hit, this pop up will show:
- *  - which player won
- *  - how many shots fired
- *  - a close button (be lead to the leading page), a play again button (leads back to the original front page)
- *  - game-mode label
- *  -
  *
  *
  *   Game Mode =  ************
@@ -27,10 +21,6 @@ import model.Main;
  *   Player's Accuracy For The Game:
  *   Computer's Accuracy For The Game:
  *
- *   Ships Lost by Player 1:
- *   - Cruiser x 2
- *   - Destroyer x 2
- *   - ..............
  *          CLOSE
  *        PLAY AGAIN
  */
@@ -53,6 +43,9 @@ public class viewSummary {
         initUI();
     }
 
+    /**
+     * A scene created to show the ending screen of the game.
+     */
     private void initUI() {
         this.borderPane = new BorderPane();
 
@@ -103,12 +96,13 @@ public class viewSummary {
         //borderPane.setCenter(vbox);
     }
 
+    /**
+     * A to set the statistics for the game summary menu.
+     */
     public void stats(){
-        //BorderPane stats = new BorderPane();
         this.borderPane.setCenter(summary());
         this.borderPane.setBottom(setupV());
         BorderPane root2 = new BorderPane();
-        //root2.getChildren().add(stats);
         Image img = new Image("ship.png");
         BackgroundImage bImg = new BackgroundImage(img,
                 BackgroundRepeat.NO_REPEAT,
@@ -135,6 +129,9 @@ public class viewSummary {
         this.stage.show();
         //borderPane.setCenter(vbox);
     }
+    /**
+     * A gridpane created to show all the titles.
+     */
     public GridPane summary(){
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -162,7 +159,9 @@ public class viewSummary {
         grid.add(small2, 1, 8);
         return grid;
     }
-
+    /**
+     * A VBox created to show all the titles and buttons.
+     */
     public VBox setupV(){
         closeButton = new Button("CLOSE");
         closeButton.setId("close");
@@ -194,5 +193,4 @@ public class viewSummary {
         screen.getChildren().addAll(playAgainButton, closeButton);
         return screen;
     }
-
 }

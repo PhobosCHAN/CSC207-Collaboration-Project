@@ -14,7 +14,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import model.Main;
-import view.viewGame;
 
 /**
  * Battleship game UI
@@ -28,20 +27,22 @@ import view.viewGame;
  *            GAME START
  *
  */
+
 public class viewStart {
     viewGame game;
     Main main;
     Stage stage;
     BorderPane borderPane;
-    Button settingsButton, gameStartButton, loadButton;
+    Button gameStartButton, loadButton;
 
     int choice; // Let 10 represent game mode (5v5) and 7 represent game mode (3v3)
-    int choice2; // Let 1 represent voiceover being on and 2 represent voiceover being off
+    int choice2; // Let 1 represent voiceover being on and 2 represent voiceover being of
 
-    private ListView<String> gameModes;
-    private double width; //height and width of canvas
-    private double height;
-
+    /**
+     * The constructor for viewStart.
+     * @param stage - Takes the current stage of the game.
+     * @param main - Takes the current main of the game.
+     */
     public viewStart(Stage stage, Main main){
         this.game = new viewGame(stage, main);
         this.main = main;
@@ -51,9 +52,10 @@ public class viewStart {
         initUI();
     }
 
+    /**
+     * A method to show all the javafx designs
+     */
     private void initUI() {
-        this.width = 100;
-        this.height = 100;
         this.borderPane = new BorderPane();
 
         borderPane.setTop(welcome());
@@ -91,6 +93,9 @@ public class viewStart {
         //borderPane.setCenter(vbox);
     }
 
+    /**
+     * A gridpane created to show the welcome screen.
+     */
     private GridPane welcome(){
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -124,6 +129,9 @@ public class viewStart {
         return grid;
     }
 
+    /**
+     * A HBox created to show all the titles and buttons.
+     */
     private HBox setupH(){
         HBox hbox = new HBox();
         //v is for the top adjustment, v2 is the bottom adjustment
@@ -169,6 +177,9 @@ public class viewStart {
         return hbox;
     }
 
+    /**
+     * A VBox created to show the choice boxes and buttons.
+     */
     private VBox setupV(){
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.setId("Game Mode Select:");
