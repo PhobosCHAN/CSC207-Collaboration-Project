@@ -333,7 +333,7 @@ public class Main extends Application {
         String n12 = "miss.wav";
         String[] audios = {n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12};
         //Change this
-        String bip = "C:\\Users\\winxc\\Stack_Overload_Certified-CSC207\\Sounds\\";
+        String bip = "./Sounds/";
         Media media = new Media(new File(bip.concat(audios[x])).toURI().toString());
         MediaPlayer mediaplayer = new MediaPlayer(media);
         if(this.choice2 == 1)
